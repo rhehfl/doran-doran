@@ -54,7 +54,6 @@ export class AuthController {
   @Get('me')
   @UseGuards(JWTAuthGuard)
   async getMe(@UserDecorator() user: UserIdentityDto): Promise<User | null> {
-    console.log('Authenticated user:', user);
     if (user.isAuthenticated) {
       const findUser = await this.userService.findOne(user.id);
 

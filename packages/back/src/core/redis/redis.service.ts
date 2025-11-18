@@ -10,7 +10,6 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
       url: process.env.REDIS_URL || 'redis://localhost:6379',
     });
     await this.client.connect();
-    console.log('✅ Redis client connected');
   }
 
   async onModuleDestroy() {

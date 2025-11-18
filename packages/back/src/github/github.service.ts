@@ -14,7 +14,6 @@ export class GithubService {
           headers: { Authorization: `Bearer ${token}` }, // 인증용 토큰
         },
       );
-      console.log(repoInfo.data);
       // ... (이하 동일) ...
     } catch (error) {
       // ...

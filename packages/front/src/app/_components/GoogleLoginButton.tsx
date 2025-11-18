@@ -11,7 +11,6 @@ export default function GoogleLoginButton() {
     initialValue: "/",
   });
   const handleGoogleLogin = () => {
-    console.log(path);
     setRedirectPath(path);
     if (process.env.NODE_ENV === "development") {
       window.location.href = "http://localhost:8080/api/auth/google";

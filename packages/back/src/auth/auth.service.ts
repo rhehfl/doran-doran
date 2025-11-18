@@ -31,7 +31,6 @@ export class AuthService {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.get<string>('JWT_SECRET'),
       });
-      console.log(payload);
       return {
         id: payload.sub,
         isAuthenticated: true,
