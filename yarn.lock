@@ -3262,6 +3262,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/passport-github2@npm:^1.2.9":
+  version: 1.2.9
+  resolution: "@types/passport-github2@npm:1.2.9"
+  dependencies:
+    "@types/express": "npm:*"
+    "@types/passport": "npm:*"
+    "@types/passport-oauth2": "npm:*"
+  checksum: 10c0/e4e5ecd6fe16f0b18886fd259824c0f97b4c19718b67580bbe70cc7dfa858967e90d8edf602dc0b04175ce3dd8223ae103e133060df4c6cb331809ecce5fc32c
+  languageName: node
+  linkType: hard
+
 "@types/passport-google-oauth20@npm:^2":
   version: 2.0.17
   resolution: "@types/passport-google-oauth20@npm:2.0.17"
@@ -4613,6 +4624,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.13.2":
+  version: 1.13.2
+  resolution: "axios@npm:1.13.2"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.4"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10c0/e8a42e37e5568ae9c7a28c348db0e8cf3e43d06fcbef73f0048669edfe4f71219664da7b6cc991b0c0f01c28a48f037c515263cb79be1f1ae8ff034cd813867b
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^4.1.0":
   version: 4.1.0
   resolution: "axobject-query@npm:4.1.0"
@@ -4722,11 +4744,13 @@ __metadata:
     "@types/jest": "npm:^30.0.0"
     "@types/node": "npm:^22.10.7"
     "@types/passport": "npm:^0"
+    "@types/passport-github2": "npm:^1.2.9"
     "@types/passport-google-oauth20": "npm:^2"
     "@types/passport-jwt": "npm:^4"
     "@types/pg": "npm:^8"
     "@types/supertest": "npm:^6.0.2"
     add: "npm:^2.0.6"
+    axios: "npm:^1.13.2"
     class-validator: "npm:^0.14.2"
     common: "workspace:*"
     cookie-parser: "npm:^1.4.7"
@@ -4738,6 +4762,7 @@ __metadata:
     jest: "npm:^30.0.0"
     jest-util: "npm:^30.2.0"
     passport: "npm:^0.7.0"
+    passport-github2: "npm:^0.1.12"
     passport-google-oauth20: "npm:^2.0.0"
     passport-jwt: "npm:^4.0.1"
     pg: "npm:^8.16.3"
@@ -5316,6 +5341,13 @@ __metadata:
   version: 1.0.4
   resolution: "clone@npm:1.0.4"
   checksum: 10c0/2176952b3649293473999a95d7bebfc9dc96410f6cbd3d2595cf12fd401f63a4bf41a7adbfd3ab2ff09ed60cb9870c58c6acdd18b87767366fabfc163700f13b
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
   languageName: node
   linkType: hard
 
@@ -7187,6 +7219,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.15.6":
+  version: 1.15.11
+  resolution: "follow-redirects@npm:1.15.11"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 10c0/d301f430542520a54058d4aeeb453233c564aaccac835d29d15e050beb33f339ad67d9bddbce01739c5dc46a6716dbe3d9d0d5134b1ca203effa11a7ef092343
+  languageName: node
+  linkType: hard
+
 "for-each@npm:^0.3.3, for-each@npm:^0.3.5":
   version: 0.3.5
   resolution: "for-each@npm:0.3.5"
@@ -7317,6 +7359,7 @@ __metadata:
     react-dom: "npm:19.1.0"
     react-icons: "npm:^5.5.0"
     react-markdown: "npm:^10.1.0"
+    react-toastify: "npm:^11.0.5"
     socket.io-client: "npm:^4.8.1"
     tailwindcss: "npm:^4"
     typescript: "npm:^5"
@@ -11678,6 +11721,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"passport-github2@npm:^0.1.12":
+  version: 0.1.12
+  resolution: "passport-github2@npm:0.1.12"
+  dependencies:
+    passport-oauth2: "npm:1.x.x"
+  checksum: 10c0/70c763f40392f15509373d43014f4c32af8f4fa0a290c74f4b0125208c7aff5a0d55c16ead5663a964653622c759fa70adbc58e417577b206deb9a5a255b528c
+  languageName: node
+  linkType: hard
+
 "passport-google-oauth20@npm:^2.0.0":
   version: 2.0.0
   resolution: "passport-google-oauth20@npm:2.0.0"
@@ -12173,6 +12225,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: 10c0/fe7dd8b1bdbbbea18d1459107729c3e4a2243ca870d26d34c2c1bcd3e4425b7bcc5112362df2d93cc7fb9746f6142b5e272fd1cc5c86ddf8580175186f6ad42b
+  languageName: node
+  linkType: hard
+
 "punycode@npm:^2.1.0":
   version: 2.3.1
   resolution: "punycode@npm:2.3.1"
@@ -12317,6 +12376,18 @@ __metadata:
     "@types/react": ">=18"
     react: ">=18"
   checksum: 10c0/4a5dc7d15ca6d05e9ee95318c1904f83b111a76f7588c44f50f1d54d4c97193b84e4f64c4b592057c989228238a2590306cedd0c4d398e75da49262b2b5ae1bf
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^11.0.5":
+  version: 11.0.5
+  resolution: "react-toastify@npm:11.0.5"
+  dependencies:
+    clsx: "npm:^2.1.1"
+  peerDependencies:
+    react: ^18 || ^19
+    react-dom: ^18 || ^19
+  checksum: 10c0/50f5b81323ebb1957b2efd0963fac24aa1407155d16ab756ffd6d0f42f8af17e796b3958a9fce13e9d1b945d6c3a5a9ebf13529478474d8a2af4bf1dd0db67d2
   languageName: node
   linkType: hard
 

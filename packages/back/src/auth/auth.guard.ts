@@ -3,10 +3,12 @@ import {
   CanActivate,
   ExecutionContext,
   Scope,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { UserIdentityDto } from './dto/user-identity.dto';
 import { AuthService } from '@/auth/auth.service';
+import { ERROR_CODE } from 'common';
 
 declare global {
   interface Express {
@@ -22,11 +24,18 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<Request>();
 
     const cookieHeader = request.headers.cookie;
+    try {
+      const userDto =
+        await this.authService.getUserIdentityFromHeader(cookieHeader);
 
-    const userDto =
-      await this.authService.getUserIdentityFromHeader(cookieHeader);
+      request.user = userDto;
+    } catch (error) {
+      if (error.message === ERROR_CODE.TOKEN_EXPIRED) {
+        throw new UnauthorizedException(ERROR_CODE.TOKEN_EXPIRED);
+      }
+      throw new UnauthorizedException(ERROR_CODE.UNAUTHORIZED);
+    }
 
-    request.user = userDto;
     return true;
   }
 }

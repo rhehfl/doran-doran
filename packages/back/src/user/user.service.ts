@@ -2,15 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AuthProvider } from '@/user/types/auth-provider.enum';
 import { User } from '@/user/user.entity';
-
-interface SocialLoginDto {
-  provider: AuthProvider;
-  providerId: string;
-  email: string;
-  nickname: string;
-}
+import { SocialLoginDto } from '@/auth/dto/social-login.dto';
 
 @Injectable()
 export class UserService {
@@ -63,8 +56,10 @@ export class UserService {
     const newUser = this.userRepository.create({
       email: dto.email,
       nickname: dto.nickname,
+      profileUrl: dto.profileUrl,
       provider: dto.provider,
       providerId: dto.providerId,
+      githubAccessToken: dto.accessToken,
     });
 
     return this.userRepository.save(newUser);
