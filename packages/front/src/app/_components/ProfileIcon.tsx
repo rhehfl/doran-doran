@@ -1,14 +1,16 @@
 "use client";
 
-import GithubLoginButton from "@/app/_components/GithubLoginButton";
 import GoogleLoginButton from "@/app/_components/GoogleLoginButton";
 import { useAuth } from "@/app/_hooks";
+import { userQueries } from "@/app/_queries";
 import { transition } from "@ssgoi/react";
 import { slide } from "@ssgoi/react/transitions";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function ProfileIcon() {
+  const { mutate: logout } = useMutation(userQueries.logout());
   const profileRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const user = useAuth();
@@ -57,7 +59,10 @@ export default function ProfileIcon() {
             })}
             className="bg-transparent absolute right-0 mt-2 w-48 rounded-2xl shadow-lg z-10"
           >
-            <button className="w-full hover:bg-gray-300 rounded-2xl cursor-pointer transition">
+            <button
+              className="w-full hover:bg-gray-300 rounded-2xl cursor-pointer transition"
+              onClick={() => logout()}
+            >
               <li className="px-4 py-2 text-center text-gray-700">로그아웃</li>
             </button>
           </ul>
@@ -69,7 +74,6 @@ export default function ProfileIcon() {
   return (
     <div className="flex flex-col">
       <GoogleLoginButton />
-      <GithubLoginButton />
     </div>
   );
 }

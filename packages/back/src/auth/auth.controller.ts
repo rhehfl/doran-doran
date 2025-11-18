@@ -1,4 +1,12 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
@@ -86,5 +94,14 @@ export class AuthController {
 
     this.cookieService.set(res, 'authToken', token);
     res.redirect(redirectUrl);
+  }
+
+  @Post('logout')
+  async logout(@Res() res: Response) {
+    this.cookieService.clear(res, 'authToken');
+
+    return res
+      .status(HttpStatus.OK)
+      .json({ message: 'Logged out successfully' });
   }
 }

@@ -1,5 +1,10 @@
 import { getMe } from "@/app/_asyncApis";
-import { queryOptions } from "@tanstack/react-query";
+import { postLogout } from "@/app/_asyncApis/postLogout";
+import {
+  mutationOptions,
+  queryOptions,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Options } from "ky";
 
 export const userQueries = {
@@ -11,4 +16,13 @@ export const userQueries = {
       gcTime: Infinity,
       staleTime: Infinity,
     }),
+  logout: () => {
+    const queryClient = useQueryClient();
+    return mutationOptions({
+      mutationFn: postLogout,
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: userQueries.all() });
+      },
+    });
+  },
 };
