@@ -4,6 +4,7 @@ import {
   getChatRoomInfo,
   postChatRoom,
 } from "@/app/_asyncApis";
+import { patchChatRoomStatus } from "@/app/_asyncApis/patchChatRoomStatus";
 import {
   mutationOptions,
   queryOptions,
@@ -39,6 +40,18 @@ export const chatRoomMutations = {
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: chatRoomQueries.list().queryKey,
+        });
+      },
+    });
+  },
+  patchStatus: (roomId: number) => {
+    const queryClient = useQueryClient();
+
+    return mutationOptions({
+      mutationFn: patchChatRoomStatus,
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: chatRoomQueries.detail(roomId).queryKey,
         });
       },
     });

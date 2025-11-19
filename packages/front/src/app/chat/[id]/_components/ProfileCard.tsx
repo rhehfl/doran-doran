@@ -1,7 +1,8 @@
 "use client";
 
-import { chatRoomQueries } from "@/app/_queries";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import ToggleButton from "@/app/_components/ToggleButton";
+import { chatRoomMutations, chatRoomQueries } from "@/app/_queries";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
@@ -12,6 +13,7 @@ interface ProfileCardProps {
 export default function ProfileCard({ size }: ProfileCardProps) {
   const { id } = useParams();
   const { data } = useSuspenseQuery(chatRoomQueries.detail(Number(id)));
+  const { mutate } = useMutation(chatRoomMutations.patchStatus(data.id));
   const { persona } = data;
 
   if (size === "small") {
@@ -33,6 +35,18 @@ export default function ProfileCard({ size }: ProfileCardProps) {
 
   return (
     <div className="dark:bg-slate-700 dark:border-slate-500 flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
+      <div>{data.isPublic ? "Public" : "Private"}</div>
+      <div className="m-2">
+        <ToggleButton
+          defaultChecked={data.isPublic}
+          onTurnOn={() => {
+            mutate({ chatRoomId: data.id, isPublic: true });
+          }}
+          onTurnOff={() => {
+            mutate({ chatRoomId: data.id, isPublic: false });
+          }}
+        />
+      </div>
       <div className="h-20 w-20 rounded-full border overflow-hidden">
         <Image
           src={`/${persona.image}`}
