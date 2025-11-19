@@ -42,4 +42,7 @@ export class ChatRoom {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @Column({ default: false })
+  isPublic: boolean;
 }

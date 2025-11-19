@@ -15,17 +15,8 @@ export const externalApi = ky.create({
         if (response.status === 500) {
           throw new Error("server error occurred");
         }
-        if (
-          response.status === 401 &&
-          response.statusText === ERROR_CODE.TOKEN_EXPIRED
-        ) {
-          console.error("토큰 만료 에러 발생");
-          throw new Error(ERROR_CODE.UNAUTHORIZED);
-        }
-        if (
-          response.status === 401 &&
-          response.statusText === ERROR_CODE.UNAUTHORIZED
-        ) {
+
+        if (response.status === 401) {
           console.error("인가되지 않은 접근 시도");
           throw new Error(ERROR_CODE.UNAUTHORIZED);
         }

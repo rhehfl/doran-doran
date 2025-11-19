@@ -10,6 +10,7 @@ import {
   HttpStatus,
   Req,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';
 import { CreateChatRoomDto } from '@/chat_rooms/dto/create-chat-room.dto';
@@ -68,5 +69,14 @@ export class ChatRoomsController {
     @User() user: UserIdentityDto,
   ): Promise<{ deleted: boolean; message: string }> {
     return this.chatRoomsService.deleteChatRoom(id, user.id);
+  }
+
+  @Patch(':id/status')
+  async updateStatus(
+    @Param('id') id: number,
+    @User() user: UserIdentityDto,
+    @Body('isPublic') isPublic: boolean,
+  ): Promise<ChatRoom> {
+    return this.chatRoomsService.updateRoomPublicStatus(id, user.id, isPublic);
   }
 }
