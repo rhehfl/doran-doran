@@ -1,3 +1,29 @@
+# [1.8.0](https://github.com/rhehfl/doran-doran/compare/v1.7.0...v1.8.0) (2025-11-18)
+
+
+### Bug Fixes
+
+* **api:** handle token expiration and unauthorized access errors ([2ce6d54](https://github.com/rhehfl/doran-doran/commit/2ce6d544027a4c5cd0c2a916ce8d84ec32827d99))
+* front 에러로깅추가 ([bb92a40](https://github.com/rhehfl/doran-doran/commit/bb92a40efd2fe99f5f64f629ada756349a5bd46d))
+* 수정된 ENUM 생성 쿼리 및 프로필 마이그레이션 파일 삭제 ([4ccdf1a](https://github.com/rhehfl/doran-doran/commit/4ccdf1ab33deceeb8b2c6fe8669d42575f74467a))
+* 인증 api 수정 ([6059a9e](https://github.com/rhehfl/doran-doran/commit/6059a9efdbbdc6f27d5399927287eb79b6b1e50d))
+
+
+### Features
+
+* add postLogout function to handle user logout API call ([f3d2b34](https://github.com/rhehfl/doran-doran/commit/f3d2b349764cfe7af58d0a28335dd2de3a338872))
+* github 소셜로그인 추가 ([96c8ee5](https://github.com/rhehfl/doran-doran/commit/96c8ee5bc279e5d4fddd92ee5b9ee3d85d0ee657))
+* GithubModule 및 GithubService 추가, axios 의존성 추가 ([a9f830c](https://github.com/rhehfl/doran-doran/commit/a9f830c0e013ddaf48d4d91227342c412e501c40))
+* GoogleGenAI 도구 목록 추가 및 package.json에서 불필요한 의존성 제거 ([9bbe994](https://github.com/rhehfl/doran-doran/commit/9bbe99414a58a88aafd578cf470a0f2171098f10))
+* 사용자 인증 및 프로필 URL 관련 기능 추가 및 수정 ([1f827ba](https://github.com/rhehfl/doran-doran/commit/1f827babaa51b4c74332ab5c1055d7fdd85ba5b6))
+* 사용자 인증 정보 반환 방식 개선 및 프로필 아이콘 컴포넌트 추가 ([ca65a68](https://github.com/rhehfl/doran-doran/commit/ca65a689784a9d40d351fe7972f6685e22e6ef5c))
+* 사용자 정보 조회 기능 추가 및 관련 DTO, 쿼리 업데이트 ([854945b](https://github.com/rhehfl/doran-doran/commit/854945b2e4eb2d53f8390230a21d7481bc995bb7))
+* 사용자 테이블에 프로필 URL 컬럼 추가를 위한 마이그레이션 생성 ([9426619](https://github.com/rhehfl/doran-doran/commit/9426619b44e173312538bfa359522997b703f4b2))
+* 오류 코드 상수 정의 추가 ([18c21db](https://github.com/rhehfl/doran-doran/commit/18c21db348d0a6d66304a6c6605d729489e6a186))
+* 인증에러 추가 ([bbff4f3](https://github.com/rhehfl/doran-doran/commit/bbff4f34e820a34813b51f0def13a4d4958d158d))
+* 프로필 아이콘 컴포넌트에 클릭 핸들러 추가 및 헤더 컴포넌트 생성 ([c3213c5](https://github.com/rhehfl/doran-doran/commit/c3213c560eba752b8cc64ab0eb780ce211148305))
+* 프로필 아이콘 클릭 시 드롭다운 메뉴 추가 및 외부 클릭 시 닫기 기능 구현 ([3c0061c](https://github.com/rhehfl/doran-doran/commit/3c0061c4e85ea9414e029a791063c22b1826f7ac))
+
 # [1.7.0](https://github.com/rhehfl/doran-doran/compare/v1.6.0...v1.7.0) (2025-11-06)
 
 
