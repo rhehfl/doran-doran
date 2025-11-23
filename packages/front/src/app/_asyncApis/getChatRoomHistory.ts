@@ -1,5 +1,3 @@
-"use client";
-
 import { externalApi } from "@/app/_libs";
 import type { Message } from "common/src/types";
 

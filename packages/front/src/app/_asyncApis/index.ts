@@ -1,7 +1,10 @@
-export * from "./getAllChatRooms";
-export * from "./getChatRoomHistory";
-export * from "./getChatRoomInfo";
-export * from "./getAllPersonas";
-export * from "./postChatRoom";
-export * from "./postSession";
-export * from "./getMe";
+export { getAllMyChatRooms } from "./getAllMyChatRooms";
+export { getAllPersonas } from "./getAllPersonas";
+export { getAllPublicChatRooms } from "./getAllPublicChatRooms";
+export { getChatRoomHistory } from "./getChatRoomHistory";
+export { getChatRoomInfo } from "./getChatRoomInfo";
+export { getMe } from "./getMe";
+export { patchChatRoomStatus } from "./patchChatRoomStatus";
+export { postChatRoom } from "./postChatRoom";
+export { postLogout } from "./postLogout";
+export { postSession } from "./postSession";

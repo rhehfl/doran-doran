@@ -1,5 +1,3 @@
-"use client";
-
 import { externalApi } from "@/app/_libs";
 
 export const postLogout = async () => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/app/_hooks";
 import {
   ChatSendForm,
   AILoadingMessage,
@@ -16,6 +17,7 @@ import { useParams } from "next/navigation";
 import { Suspense } from "react";
 
 export default function ChatRoom() {
+  const user = useAuth();
   const { id } = useParams();
   const { displayedText, addChunk, setText, reset } = useTypingEffect();
   const { historyUpdater } = useChatHistoryUpdater(Number(id));
@@ -29,14 +31,12 @@ export default function ChatRoom() {
       const finalAiMessage: Message = {
         author: "Gemini",
         content: fullText,
+        userId: user?.userId || "",
       };
       historyUpdater(finalAiMessage);
       reset();
     },
     onMessage: (message: Message) => {
-      historyUpdater(message);
-    },
-    onSendComplete(message) {
       historyUpdater(message);
     },
   });

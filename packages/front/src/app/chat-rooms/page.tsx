@@ -1,4 +1,3 @@
-import { externalApi } from "@/app/_libs";
 import { SuspenseChatRoomList } from "@/app/chat-rooms/_components";
 import {
   dehydrate,
@@ -10,6 +9,7 @@ import { cookies } from "next/headers";
 import { chatRoomQueries } from "@/app/_queries";
 import { SsgoiTransition } from "@ssgoi/react";
 import { Header } from "@/app/_components";
+import { getAllMyChatRooms, getAllPublicChatRooms } from "@/app/_asyncApis";
 
 export default async function ChatRoomsPage() {
   const queryClient = new QueryClient();
@@ -17,25 +17,32 @@ export default async function ChatRoomsPage() {
 
   const sessionToken = cookieStore.get("chat_session_id")?.value;
   const authToken = cookieStore.get("authToken")?.value;
-  const cookieHeaderValue = sessionToken
-    ? `chat_session_id=${sessionToken}`
-    : undefined;
-  const authCookieHeaderValue = authToken
-    ? `authToken=${authToken}`
-    : undefined;
 
-  const chatRoomQuery = chatRoomQueries.list();
+  const cookieString = [
+    sessionToken && `chat_session_id=${sessionToken}`,
+    authToken && `authToken=${authToken}`,
+  ]
+    .filter(Boolean)
+    .join("; ");
+
+  const myChatRoomQuery = chatRoomQueries.myList();
+  const publicChatRoomQuery = chatRoomQueries.publicList();
+
+  const options = {
+    headers: {
+      Cookie: cookieString,
+    },
+  };
+  await queryClient.prefetchQuery({
+    queryKey: myChatRoomQuery.queryKey,
+    queryFn: () => getAllMyChatRooms(options),
+    staleTime: 1000 * 60 * 5,
+  });
 
   await queryClient.prefetchQuery({
-    queryKey: chatRoomQuery.queryKey,
-    queryFn: () =>
-      externalApi("api/chatrooms", {
-        headers: {
-          Cookie:
-            cookieHeaderValue +
-            (authCookieHeaderValue ? `; ${authCookieHeaderValue}` : ""),
-        },
-      }).json(),
+    queryKey: publicChatRoomQuery.queryKey,
+    queryFn: () => getAllPublicChatRooms(options),
+    staleTime: 1000 * 60 * 5,
   });
   const dehydratedState = dehydrate(queryClient);
   return (

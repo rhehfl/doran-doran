@@ -97,7 +97,7 @@ export class ChatGateway {
       });
       return;
     }
-
+    this.server.to(roomName).emit('message', payload);
     try {
       await this.chatService.saveChatMessage(
         Number(roomId),
@@ -107,7 +107,7 @@ export class ChatGateway {
         user.isAuthenticated,
       );
     } catch (error) {
-      socket.emit('save-error', {
+      this.server.to(roomName).emit('save-error', {
         message: '메시지 처리 중 오류가 발생했습니다.',
         reason: error.message,
       });
@@ -127,6 +127,7 @@ export class ChatGateway {
     );
 
     const aiMessage: Message = {
+      userId: user.id,
       author: 'Gemini',
       content: aiResponseText,
     };

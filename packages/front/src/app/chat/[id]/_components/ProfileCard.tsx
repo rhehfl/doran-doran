@@ -1,6 +1,7 @@
 "use client";
 
 import ToggleButton from "@/app/_components/ToggleButton";
+import { useAuth } from "@/app/_hooks";
 import { chatRoomMutations, chatRoomQueries } from "@/app/_queries";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -12,10 +13,10 @@ interface ProfileCardProps {
 
 export default function ProfileCard({ size }: ProfileCardProps) {
   const { id } = useParams();
+  const user = useAuth();
   const { data } = useSuspenseQuery(chatRoomQueries.detail(Number(id)));
   const { mutate } = useMutation(chatRoomMutations.patchStatus(data.id));
   const { persona } = data;
-
   if (size === "small") {
     return (
       <div className="flex flex-col min-w-15 items-center space-y-2 mr-2">
@@ -35,18 +36,23 @@ export default function ProfileCard({ size }: ProfileCardProps) {
 
   return (
     <div className="dark:bg-slate-700 dark:border-slate-500 flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
-      <div>{data.isPublic ? "Public" : "Private"}</div>
-      <div className="m-2">
-        <ToggleButton
-          defaultChecked={data.isPublic}
-          onTurnOn={() => {
-            mutate({ chatRoomId: data.id, isPublic: true });
-          }}
-          onTurnOff={() => {
-            mutate({ chatRoomId: data.id, isPublic: false });
-          }}
-        />
-      </div>
+      {user?.userId === data.userId && (
+        <>
+          <div>{data.isPublic ? "Public" : "Private"}</div>
+          <div className="m-2">
+            <ToggleButton
+              defaultChecked={data.isPublic}
+              onTurnOn={() => {
+                mutate({ chatRoomId: data.id, isPublic: true });
+              }}
+              onTurnOff={() => {
+                mutate({ chatRoomId: data.id, isPublic: false });
+              }}
+            />
+          </div>
+        </>
+      )}
+
       <div className="h-20 w-20 rounded-full border overflow-hidden">
         <Image
           src={`/${persona.image}`}

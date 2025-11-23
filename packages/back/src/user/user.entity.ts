@@ -38,7 +38,4 @@ export class User {
 
   @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.user)
   chatRooms: ChatRoom[];
-
-  @Column({ type: 'varchar', nullable: true })
-  githubAccessToken?: string;
 }

@@ -21,6 +21,11 @@ export const externalApi = ky.create({
           throw new Error(ERROR_CODE.UNAUTHORIZED);
         }
 
+        if (response.status === 403) {
+          console.error("권한없음");
+          throw new Error(ERROR_CODE.FORBIDDEN);
+        }
+
         return response;
       },
     ],

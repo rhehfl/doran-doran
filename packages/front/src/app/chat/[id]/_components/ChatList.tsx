@@ -24,12 +24,7 @@ export default function ChatList({ streamingMessage }: ChatListProps) {
   return (
     <>
       {messages.map((msg, index) => (
-        <ChatCard
-          key={index}
-          id={index}
-          author={msg.author}
-          content={msg.content}
-        />
+        <ChatCard key={index} id={index} {...msg} />
       ))}
       <div ref={messagesEndRef} />
     </>

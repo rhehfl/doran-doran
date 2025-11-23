@@ -26,31 +26,6 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
-  @Get('github')
-  @UseGuards(AuthGuard('github'))
-  async githubAuth() {}
-
-  @Get('github/callback')
-  @UseGuards(AuthGuard('github'))
-  async githubAuthCallback(@Req() req, @Res() res: Response) {
-    const githubData = req.user as UserIdentityDto;
-    const nodeEnv = this.configService.get<string>('NODE_ENV');
-
-    const jwtToken = await this.authService.login(githubData);
-    const token = jwtToken.access_token;
-
-    const isDevelopment = nodeEnv === 'dev';
-
-    let redirectUrl = '';
-    if (isDevelopment) {
-      redirectUrl = `https://localhost:3000/auth/callback`;
-    } else {
-      redirectUrl = `https://www.doran-doran.cloud/auth/callback`;
-    }
-
-    this.cookieService.set(res, 'authToken', token);
-    res.redirect(redirectUrl);
-  }
   @Get('me')
   @UseGuards(JWTAuthGuard)
   async getMe(@UserDecorator() user: UserIdentityDto): Promise<User | null> {
@@ -59,6 +34,7 @@ export class AuthController {
 
       if (findUser) {
         return {
+          userId: findUser.id,
           nickname: findUser.nickname,
           profileUrl: findUser.profileUrl,
           isAuthenticated: true,
