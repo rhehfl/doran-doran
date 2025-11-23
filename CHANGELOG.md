@@ -1,3 +1,18 @@
+# [1.9.0](https://github.com/rhehfl/doran-doran/compare/v1.8.0...v1.9.0) (2025-11-23)
+
+
+### Bug Fixes
+
+* 수정된 문자열로 'use client' 구문 정리 ([26a356b](https://github.com/rhehfl/doran-doran/commit/26a356b15f2229441ff918c73c1c4a34cca82fe6))
+
+
+### Features
+
+* 채팅방 public 조회 ([cc72adf](https://github.com/rhehfl/doran-doran/commit/cc72adf11dd933c8783edb0fee429760271d151b))
+* 채팅방 공개 상태 업데이트 기능 추가 및 관련 API 구현 ([1f3e31a](https://github.com/rhehfl/doran-doran/commit/1f3e31a3d60cee8bb593b6dfdeac6ae1d105a216))
+* 토큰 리프레시 로직 추가 ([52868fc](https://github.com/rhehfl/doran-doran/commit/52868fcfedf95ca089dfa600da28bed0df8549e1))
+* 프론트 방 공개 로직  추가 ([bd6968a](https://github.com/rhehfl/doran-doran/commit/bd6968a6469f7f1628b95403cf14707ec1be11be))
+
 # [1.8.0](https://github.com/rhehfl/doran-doran/compare/v1.7.0...v1.8.0) (2025-11-18)
 
 
