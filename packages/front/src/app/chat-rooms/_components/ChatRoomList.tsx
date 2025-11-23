@@ -5,7 +5,7 @@ import { ChatRoomCard } from "@/app/chat-rooms/_components";
 import { chatRoomQueries } from "@/app/_queries";
 
 export default function ChatRoomList() {
-  const { data: chatRoomList } = useSuspenseQuery(chatRoomQueries.list());
+  const { data: chatRoomList } = useSuspenseQuery(chatRoomQueries.myList());
 
   if (chatRoomList.length === 0) {
     return (

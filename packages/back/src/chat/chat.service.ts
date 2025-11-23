@@ -40,12 +40,17 @@ export class ChatService {
     const reversedHistory = dbHistory.reverse();
     const multi = this.redisClient.multi();
     for (const msg of reversedHistory) {
-      const cacheMsg: Message = { author: msg.author, content: msg.content };
+      const cacheMsg: Message = {
+        userId: msg.userId,
+        author: msg.author,
+        content: msg.content,
+      };
       multi.rPush(key, JSON.stringify(cacheMsg));
     }
     await multi.exec();
 
     return dbHistory.map((msg) => ({
+      userId: msg.userId,
       author: msg.author,
       content: msg.content,
     }));

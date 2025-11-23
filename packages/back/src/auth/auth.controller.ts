@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpStatus,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
@@ -26,40 +18,15 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
-  @Get('github')
-  @UseGuards(AuthGuard('github'))
-  async githubAuth() {}
-
-  @Get('github/callback')
-  @UseGuards(AuthGuard('github'))
-  async githubAuthCallback(@Req() req, @Res() res: Response) {
-    const githubData = req.user as UserIdentityDto;
-    const nodeEnv = this.configService.get<string>('NODE_ENV');
-
-    const jwtToken = await this.authService.login(githubData);
-    const token = jwtToken.access_token;
-
-    const isDevelopment = nodeEnv === 'dev';
-
-    let redirectUrl = '';
-    if (isDevelopment) {
-      redirectUrl = `https://localhost:3000/auth/callback`;
-    } else {
-      redirectUrl = `https://www.doran-doran.cloud/auth/callback`;
-    }
-
-    this.cookieService.set(res, 'authToken', token);
-    res.redirect(redirectUrl);
-  }
   @Get('me')
   @UseGuards(JWTAuthGuard)
   async getMe(@UserDecorator() user: UserIdentityDto): Promise<User | null> {
-    console.log('Authenticated user:', user);
     if (user.isAuthenticated) {
       const findUser = await this.userService.findOne(user.id);
 
       if (findUser) {
         return {
+          userId: findUser.id,
           nickname: findUser.nickname,
           profileUrl: findUser.profileUrl,
           isAuthenticated: true,
@@ -81,7 +48,8 @@ export class AuthController {
 
     const nodeEnv = this.configService.get<string>('NODE_ENV');
     const jwtToken = await this.authService.login(user);
-    const token = jwtToken.access_token;
+    const accessToken = jwtToken.access_token;
+    const refreshToken = jwtToken.refresh_token;
 
     const isDevelopment = nodeEnv === 'dev';
 
@@ -92,16 +60,34 @@ export class AuthController {
       redirectUrl = `https://www.doran-doran.cloud/auth/callback`;
     }
 
-    this.cookieService.set(res, 'authToken', token);
+    this.cookieService.set(res, 'authToken', accessToken);
+    this.cookieService.set(res, 'refreshToken', refreshToken);
     res.redirect(redirectUrl);
+  }
+  @Post('refresh')
+  @UseGuards(AuthGuard('jwt-refresh')) // 👈 방금 만든 RT 전략 사용
+  async refresh(@Req() req, @Res({ passthrough: true }) res: Response) {
+    // Guard를 통과했다는 건 RT가 유효하다는 뜻!
+    // req.user에는 Strategy의 validate 리턴값이 들어있습니다.
+    const oldRefreshToken = req.user.refreshToken;
+    // 서비스에 요청 (새 토큰 발급)
+    // (Stateless라 oldRefreshToken은 사실 안 써도 되지만,
+    // 나중에 블랙리스트 기능을 넣을 수도 있으니 넘겨는 둡니다)
+    const tokens = await this.authService.refresh(oldRefreshToken);
+
+    // 🍪 쿠키 굽기 (Login 때와 동일한 옵션)
+    // 1. Access Token
+    this.cookieService.set(res, 'authToken', tokens.access_token);
+    this.cookieService.set(res, 'refreshToken', tokens.refresh_token);
+    return { message: 'Refreshed successfully' };
   }
 
   @Post('logout')
-  async logout(@Res() res: Response) {
-    this.cookieService.clear(res, 'authToken');
+  @UseGuards(AuthGuard('jwt')) // 혹은 jwt-refresh, 로그인 된 상태여야 함
+  async logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('authToken');
+    res.clearCookie('refresh_token', { path: '/api/auth/refresh' });
 
-    return res
-      .status(HttpStatus.OK)
-      .json({ message: 'Logged out successfully' });
+    return { message: 'Logged out successfully' };
   }
 }

@@ -68,6 +68,7 @@ export class ChatRoomsService {
         userId: true,
         createdAt: true,
         updatedAt: true,
+        isPublic: true,
         persona: { id: true, name: true, prompt: true, image: true },
       },
       relations: ['persona'],
@@ -77,13 +78,31 @@ export class ChatRoomsService {
       throw new NotFoundException(`ChatRoom with ID ${roomId} not found.`);
     }
 
-    if (chatRoom.userId !== userId) {
-      throw new NotFoundException(
-        `ChatRoom with ID ${roomId} not found for this user.`,
-      );
+    if (chatRoom.userId !== userId && !chatRoom.isPublic) {
+      throw new ForbiddenException(`이 채팅방에 접근할 권한이 없습니다.`);
     }
 
     return chatRoom;
+  }
+  async updateRoomPublicStatus(
+    roomId: number,
+    userId: string,
+    isPublic: boolean,
+  ): Promise<ChatRoom> {
+    const chatRoom = await this.chatRoomRepository.findOne({
+      where: { id: roomId },
+    });
+
+    if (!chatRoom) {
+      throw new NotFoundException(`ChatRoom not found.`);
+    }
+
+    if (chatRoom.userId !== userId) {
+      throw new ForbiddenException('채팅방 설정을 변경할 권한이 없습니다.');
+    }
+
+    chatRoom.isPublic = isPublic;
+    return this.chatRoomRepository.save(chatRoom);
   }
   async getAllChatRooms(userId: string): Promise<ChatRoom[]> {
     return this.chatRoomRepository.find({
@@ -97,6 +116,18 @@ export class ChatRoomsService {
         persona: { id: true, name: true, image: true },
       },
       relations: ['persona'],
+    });
+  }
+  async getAllPublicChatRooms(): Promise<ChatRoom[]> {
+    return this.chatRoomRepository.find({
+      where: { isPublic: true },
+      order: { updatedAt: 'DESC' },
+    });
+  }
+  async getPublicChatRooms(): Promise<ChatRoom[]> {
+    return this.chatRoomRepository.find({
+      where: { isPublic: true },
+      order: { updatedAt: 'DESC' },
     });
   }
 

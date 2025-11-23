@@ -6,4 +6,5 @@ export interface ChatRoom {
   createdAt: Date;
   updatedAt: Date;
   persona: Omit<Persona, "description" | "prompt">;
+  isPublic: boolean;
 }

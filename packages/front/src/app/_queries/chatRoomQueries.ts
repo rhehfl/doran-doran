@@ -1,9 +1,11 @@
 import {
-  getAllChatRooms,
+  getAllMyChatRooms,
+  getAllPublicChatRooms,
   getChatRoomHistory,
   getChatRoomInfo,
   postChatRoom,
 } from "@/app/_asyncApis";
+import { patchChatRoomStatus } from "@/app/_asyncApis/patchChatRoomStatus";
 import {
   mutationOptions,
   queryOptions,
@@ -12,10 +14,17 @@ import {
 
 export const chatRoomQueries = {
   all: () => ["chatRooms"] as const,
-  list: () =>
+  list: () => [...chatRoomQueries.all(), "list"] as const,
+  publicList: () =>
     queryOptions({
-      queryKey: [...chatRoomQueries.all(), "list"] as const,
-      queryFn: () => getAllChatRooms(),
+      queryKey: [...chatRoomQueries.list(), "public"],
+      queryFn: () => getAllPublicChatRooms(),
+      staleTime: 60 * 1000 * 5,
+    }),
+  myList: () =>
+    queryOptions({
+      queryKey: [...chatRoomQueries.list(), "my"],
+      queryFn: () => getAllMyChatRooms(),
       staleTime: 60 * 1000 * 5,
     }),
   details: () => [...chatRoomQueries.all(), "details"] as const,
@@ -38,7 +47,19 @@ export const chatRoomMutations = {
       mutationFn: postChatRoom,
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: chatRoomQueries.list().queryKey,
+          queryKey: chatRoomQueries.list(),
+        });
+      },
+    });
+  },
+  patchStatus: (roomId: number) => {
+    const queryClient = useQueryClient();
+
+    return mutationOptions({
+      mutationFn: patchChatRoomStatus,
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: chatRoomQueries.detail(roomId).queryKey,
         });
       },
     });

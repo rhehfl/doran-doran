@@ -10,6 +10,7 @@ import {
   HttpStatus,
   Req,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';
 import { CreateChatRoomDto } from '@/chat_rooms/dto/create-chat-room.dto';
@@ -21,7 +22,6 @@ import { User } from '@/auth/user.decorator';
 import { AuthGuard } from '@/auth/auth.guard';
 
 @Controller('chatrooms')
-@UseGuards(AuthGuard)
 export class ChatRoomsController {
   constructor(
     private readonly chatRoomsService: ChatRoomsService,
@@ -29,6 +29,7 @@ export class ChatRoomsController {
   ) {}
 
   @Post()
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
   create(
     @Body() createDto: CreateChatRoomDto,
@@ -43,8 +44,13 @@ export class ChatRoomsController {
 
     return this.chatRoomsService.createChatRoom(completeDto);
   }
-
   @Get()
+  publicFindAll(): Promise<ChatRoom[]> {
+    return this.chatRoomsService.getPublicChatRooms();
+  }
+
+  @Get('/me')
+  @UseGuards(AuthGuard)
   findAll(
     @Req() req: Request,
     @User() user: UserIdentityDto,
@@ -53,6 +59,7 @@ export class ChatRoomsController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   findOne(
     @Req() req: Request,
     @Param('id') id: number,
@@ -62,11 +69,22 @@ export class ChatRoomsController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(
     @Param('id') id: number,
     @User() user: UserIdentityDto,
   ): Promise<{ deleted: boolean; message: string }> {
     return this.chatRoomsService.deleteChatRoom(id, user.id);
+  }
+
+  @Patch(':id/status')
+  @UseGuards(AuthGuard)
+  async updateStatus(
+    @Param('id') id: number,
+    @User() user: UserIdentityDto,
+    @Body('isPublic') isPublic: boolean,
+  ): Promise<ChatRoom> {
+    return this.chatRoomsService.updateRoomPublicStatus(id, user.id, isPublic);
   }
 }

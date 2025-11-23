@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
 
       request.user = userDto;
     } catch (error) {
-      if (error.message === ERROR_CODE.TOKEN_EXPIRED) {
+      if (error.message === 'jwt expired') {
         throw new UnauthorizedException(ERROR_CODE.TOKEN_EXPIRED);
       }
       throw new UnauthorizedException(ERROR_CODE.UNAUTHORIZED);

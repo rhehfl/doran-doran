@@ -1,6 +1,9 @@
 "use client";
-
-import ChatRoomList from "@/app/chat-rooms/_components/ChatRoomList";
+import dynamic from "next/dynamic";
+const ChatRoomList = dynamic(
+  () => import("@/app/chat-rooms/_components/ChatRoomList"),
+  { ssr: false },
+);
 import { Suspense } from "react";
 
 export default function SuspenseChatRoomList() {

@@ -1,4 +1,5 @@
 import { userQueries } from "@/app/_queries";
+import { cookieParser } from "@/app/_utils";
 import {
   dehydrate,
   HydrationBoundary,
@@ -15,21 +16,10 @@ export default async function AuthProvider({
   const cookieStore = await cookies();
   const queryClient = new QueryClient();
 
-  const authToken = cookieStore.get("authToken")?.value;
-  const chatSessionId = cookieStore.get("chat_session_id")?.value;
-
-  const chatSessionIdHeaderValue = chatSessionId
-    ? `chat_session_id=${chatSessionId}`
-    : undefined;
-  const authCookieHeaderValue = authToken
-    ? `authToken=${authToken}`
-    : undefined;
-
+  const cookieString = cookieParser(cookieStore);
   const userQuery = userQueries.me({
     headers: {
-      Cookie: [authCookieHeaderValue, chatSessionIdHeaderValue]
-        .filter(Boolean)
-        .join("; "),
+      Cookie: cookieString,
     },
   });
 

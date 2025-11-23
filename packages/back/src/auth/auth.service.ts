@@ -21,6 +21,21 @@ export class AuthService {
       isAuthenticated: true,
     };
   }
+  async refresh(oldRefreshToken: string) {
+    // 1. 토큰 해독 (Strategy에서 이미 했지만, payload 정보 추출용으로 verifyAsync 한 번 더 해도 됨)
+    // 혹은, Controller에서 넘겨준 userId를 바로 써도 됨.
+    // 여기서는 안전하게 검증 한 번 더 하는 로직 예시:
+
+    try {
+      const payload = await this.jwtService.verifyAsync(oldRefreshToken, {
+        secret: this.configService.get('JWT_REFRESH_SECRET'),
+      });
+
+      return this.login({ id: payload.sub, isAuthenticated: true });
+    } catch (e) {
+      throw new UnauthorizedException('Invalid Refresh Token');
+    }
+  }
 
   async getUserIdentityFromHeader(
     cookieHeader: string | undefined,
@@ -31,7 +46,6 @@ export class AuthService {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.get<string>('JWT_SECRET'),
       });
-      console.log(payload);
       return {
         id: payload.sub,
         isAuthenticated: true,
@@ -55,6 +69,10 @@ export class AuthService {
     const payload = { sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
+      refresh_token: this.jwtService.sign(payload, {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        expiresIn: '7d',
+      }),
     };
   }
 

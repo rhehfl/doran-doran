@@ -3,16 +3,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { Message } from "common";
 import { io, Socket } from "socket.io-client";
+import { useAuth } from "@/app/_hooks";
 
 interface UseChatOptions {
   onStream?: (chunk: string) => void;
   onStreamDone?: (fullText: string) => void;
   onStreamError?: (message: string) => void;
   onMessage?: (message: Message) => void;
-  onSendComplete?: (message: Message) => void;
 }
 
 export const useChat = (roomId?: number, options?: UseChatOptions) => {
+  const user = useAuth();
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isAiThinking, setIsAiThinking] = useState(false);
@@ -42,7 +43,6 @@ export const useChat = (roomId?: number, options?: UseChatOptions) => {
 
     newSocket.on("message", (message: Message) => {
       options?.onMessage?.(message);
-      setIsAiThinking(false);
     });
 
     newSocket.on("ai-stream", (data: { text: string }) => {
@@ -77,12 +77,11 @@ export const useChat = (roomId?: number, options?: UseChatOptions) => {
       }
       setIsAiThinking(true);
       const newMessage: Message = {
+        userId: user?.userId || "",
         author: "user",
         content,
       };
       socket.emit("message", newMessage);
-
-      options?.onSendComplete?.(newMessage);
     },
     [socket, isConnected],
   );

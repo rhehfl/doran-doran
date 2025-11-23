@@ -59,7 +59,6 @@ export class UserService {
       profileUrl: dto.profileUrl,
       provider: dto.provider,
       providerId: dto.providerId,
-      githubAccessToken: dto.accessToken,
     });
 
     return this.userRepository.save(newUser);

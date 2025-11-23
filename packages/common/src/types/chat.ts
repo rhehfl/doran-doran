@@ -1,5 +1,6 @@
 export interface Message {
   author: "user" | "Gemini";
+  userId: string;
   content: string;
 }
 
