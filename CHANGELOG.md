@@ -1,3 +1,16 @@
+# [1.10.0](https://github.com/rhehfl/doran-doran/compare/v1.9.0...v1.10.0) (2025-11-23)
+
+
+### Bug Fixes
+
+* update common package resolution to use workspace syntax ([efea62a](https://github.com/rhehfl/doran-doran/commit/efea62a1a91c7187165fe46eb2b6fe451bd39730))
+* update package resolution for common to use npm instead of workspace ([96e0f4a](https://github.com/rhehfl/doran-doran/commit/96e0f4ae96e07a283793539670d4d7d7a0e92bab))
+
+
+### Features
+
+* transpilePackages 설정 추가 ([1a766d9](https://github.com/rhehfl/doran-doran/commit/1a766d9a26bd8f5e1326e7b99dddfa841873c455))
+
 # [1.9.0](https://github.com/rhehfl/doran-doran/compare/v1.8.0...v1.9.0) (2025-11-23)
 
 
