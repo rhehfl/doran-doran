@@ -17,8 +17,26 @@ export const externalApi = ky.create({
         }
 
         if (response.status === 401) {
-          console.error("인가되지 않은 접근 시도");
-          throw new Error(ERROR_CODE.UNAUTHORIZED);
+          if (request.url.includes("auth/refresh")) {
+            return response;
+          }
+
+          try {
+            await ky.post("api/auth/refresh", {
+              prefixUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+              headers: options.headers,
+              credentials: "include",
+            });
+
+            return ky(request);
+          } catch (error) {
+            console.error("세션이 만료되었습니다. 다시 로그인해주세요.");
+
+            if (typeof window !== "undefined") {
+              window.location.href = "/";
+            }
+            throw error;
+          }
         }
 
         if (response.status === 403) {

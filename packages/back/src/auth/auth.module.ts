@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CookieModule } from '@/common/cookie/cookie.module';
 import { AuthGuard } from '@/auth/auth.guard';
+import { RtStrategy } from '@/auth/strategies/rt.strategy';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { AuthGuard } from '@/auth/auth.guard';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleStrategy, JwtStrategy, AuthGuard],
+  providers: [AuthService, GoogleStrategy, JwtStrategy, AuthGuard, RtStrategy],
   exports: [AuthGuard, JwtModule, AuthService],
 })
 export class AuthModule {}

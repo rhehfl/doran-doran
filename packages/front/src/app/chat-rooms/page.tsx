@@ -10,20 +10,13 @@ import { chatRoomQueries } from "@/app/_queries";
 import { SsgoiTransition } from "@ssgoi/react";
 import { Header } from "@/app/_components";
 import { getAllMyChatRooms, getAllPublicChatRooms } from "@/app/_asyncApis";
+import { cookieParser } from "@/app/_utils";
 
 export default async function ChatRoomsPage() {
   const queryClient = new QueryClient();
   const cookieStore = await cookies();
 
-  const sessionToken = cookieStore.get("chat_session_id")?.value;
-  const authToken = cookieStore.get("authToken")?.value;
-
-  const cookieString = [
-    sessionToken && `chat_session_id=${sessionToken}`,
-    authToken && `authToken=${authToken}`,
-  ]
-    .filter(Boolean)
-    .join("; ");
+  const cookieString = cookieParser(cookieStore);
 
   const myChatRoomQuery = chatRoomQueries.myList();
   const publicChatRoomQuery = chatRoomQueries.publicList();
