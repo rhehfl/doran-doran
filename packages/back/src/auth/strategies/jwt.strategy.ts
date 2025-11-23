@@ -1,7 +1,7 @@
 // src/auth/strategies/jwt.strategy.ts
 import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
 import { UserService } from '@/user/user.service';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';

@@ -22,7 +22,7 @@ export class RtStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
       passReqToCallback: true,
     });
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validate(req: Request, payload: any) {
     const refreshToken = req.cookies?.refreshToken;
     return {

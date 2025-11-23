@@ -4,7 +4,6 @@ import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
 import { UserService } from '@/user/user.service';
 import { SocialLoginDto } from '@/auth/dto/social-login.dto';
 import { ConfigService } from '@nestjs/config';
-import { ref } from 'process';
 
 @Injectable()
 export class AuthService {
