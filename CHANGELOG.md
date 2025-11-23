@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/rhehfl/doran-doran/compare/v1.10.0...v1.11.0) (2025-11-23)
+
+
+### Features
+
+* 사용자 테이블에서 githubAccessToken 열 삭제를 위한 마이그레이션 추가 ([5f1a811](https://github.com/rhehfl/doran-doran/commit/5f1a8114cd192223ceeead1d64255d164a23c784))
+
 # [1.10.0](https://github.com/rhehfl/doran-doran/compare/v1.9.0...v1.10.0) (2025-11-23)
 
 
