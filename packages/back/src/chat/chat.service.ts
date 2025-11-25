@@ -7,6 +7,7 @@ import { Chat } from '@/chat/chat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
+import { ActiveUserDto } from '@/chat/dto/active-user-dto';
 @Injectable()
 export class ChatService {
   private redisClient: RedisClientType;
@@ -24,7 +25,7 @@ export class ChatService {
   async addActiveUser(
     roomId: number,
     socketId: string,
-    user: UserIdentityDto,
+    user: ActiveUserDto,
   ): Promise<void> {
     const key = `chat:room:${roomId}:online`;
     await this.redisClient.hSet(key, socketId, JSON.stringify(user));
@@ -35,15 +36,14 @@ export class ChatService {
     await this.redisClient.hDel(key, socketId);
   }
 
-  async getActiveUsers(roomId: number): Promise<UserIdentityDto[]> {
+  async getActiveUsers(roomId: number): Promise<ActiveUserDto[]> {
     const key = `chat:room:${roomId}:online`;
     const rawValues = await this.redisClient.hVals(key);
 
-    const users = rawValues.map((v) => JSON.parse(v) as UserIdentityDto);
-
-    const uniqueUsersMap = new Map<string, UserIdentityDto>();
+    const users = rawValues.map((v) => JSON.parse(v) as ActiveUserDto);
+    const uniqueUsersMap = new Map<string, ActiveUserDto>();
     users.forEach((user) => {
-      uniqueUsersMap.set(user.id, user);
+      uniqueUsersMap.set(user.userId, user);
     });
 
     return Array.from(uniqueUsersMap.values());

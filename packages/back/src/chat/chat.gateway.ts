@@ -40,17 +40,17 @@ export class ChatGateway {
     const roomId = socket.handshake.query.roomId;
     let userDto: UserIdentityDto;
 
+    if (!roomId) {
+      socket.emit('error', { message: '방 ID가 없습니다.' });
+      socket.disconnect();
+      return;
+    }
+
     try {
       userDto = await this.authService.getUserIdentityFromHeader(cookieHeader);
     } catch (error) {
       console.error('[WS Connection Error] Auth failed:', error.message);
       socket.emit('error', { message: ERROR_CODE.UNAUTHORIZED });
-      socket.disconnect();
-      return;
-    }
-
-    if (!roomId) {
-      socket.emit('error', { message: '방 ID가 없습니다.' });
       socket.disconnect();
       return;
     }
@@ -77,7 +77,11 @@ export class ChatGateway {
     }
 
     socket.data.user = userDto;
-    await this.chatService.addActiveUser(Number(roomId), socket.id, userDto);
+    await this.chatService.addActiveUser(Number(roomId), socket.id, {
+      userId: userDto.id,
+      nickname: 'test',
+      isAuthenticated: userDto.isAuthenticated,
+    });
     await this.broadcastActiveUsers(Number(roomId));
     socket.join(`room_${roomId}`);
   }
