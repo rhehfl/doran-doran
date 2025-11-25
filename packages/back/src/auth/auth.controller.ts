@@ -83,10 +83,10 @@ export class AuthController {
   }
 
   @Post('logout')
-  @UseGuards(AuthGuard('jwt')) // 혹은 jwt-refresh, 로그인 된 상태여야 함
+  @UseGuards(JWTAuthGuard)
   async logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie('authToken');
-    res.clearCookie('refresh_token', { path: '/api/auth/refresh' });
+    this.cookieService.clear(res, 'authToken');
+    this.cookieService.clear(res, 'refreshToken');
 
     return { message: 'Logged out successfully' };
   }
