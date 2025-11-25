@@ -4,6 +4,7 @@ import ReactQueryProvider from "@/app/_provider/ReactQueryProvider";
 import Script from "next/script";
 import { AuthProvider, SsgoiProvider, ThemeProvider } from "@/app/_provider";
 import { GetSession } from "@/app/_components";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default function RootLayout({
             <GetSession />
             <AuthProvider>
               <SsgoiProvider>{children}</SsgoiProvider>
+              <ToastContainer />
             </AuthProvider>
           </ReactQueryProvider>
         </ThemeProvider>

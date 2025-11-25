@@ -22,11 +22,8 @@ export const externalApi = ky.create({
           }
 
           try {
-            await ky.post("api/auth/refresh", {
-              prefixUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
-              headers: options.headers,
-              credentials: "include",
-            });
+            console.log(request.url);
+            await ky.post("api/auth/refresh", options);
 
             return ky(request);
           } catch (error) {

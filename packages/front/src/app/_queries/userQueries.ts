@@ -6,6 +6,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { Options } from "ky";
+import { toast } from "react-toastify";
 
 export const userQueries = {
   all: () => ["users"] as const,
@@ -21,6 +22,7 @@ export const userQueries = {
     return mutationOptions({
       mutationFn: postLogout,
       onSettled: () => {
+        toast.success("로그아웃 성공!");
         queryClient.invalidateQueries({ queryKey: userQueries.all() });
       },
     });
