@@ -5,7 +5,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { ReactNode } from "react";
 
 export default async function AuthProvider({
@@ -13,17 +13,24 @@ export default async function AuthProvider({
 }: {
   children: ReactNode;
 }) {
-  const cookieStore = await cookies();
+  const headersList = await headers();
+  const referer = headersList.get("referer") || "";
+  const isFromGoogle = referer.includes("accounts.google.com");
+
   const queryClient = new QueryClient();
 
-  const cookieString = cookieParser(cookieStore);
-  const userQuery = userQueries.me({
-    headers: {
-      Cookie: cookieString,
-    },
-  });
+  if (!isFromGoogle) {
+    const cookieStore = await cookies();
+    const cookieString = cookieParser(cookieStore);
+    const userQuery = userQueries.me({
+      headers: {
+        Cookie: cookieString,
+      },
+    });
 
-  await queryClient.prefetchQuery(userQuery);
+    await queryClient.prefetchQuery(userQuery);
+  }
+
   const dehydratedState = dehydrate(queryClient);
 
   return (
