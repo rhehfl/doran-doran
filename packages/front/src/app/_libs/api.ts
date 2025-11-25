@@ -22,7 +22,6 @@ export const externalApi = ky.create({
           }
 
           try {
-            console.log(request.url);
             await ky.post("api/auth/refresh", options);
 
             return ky(request);

@@ -6,6 +6,7 @@ import { Message } from 'common';
 import { Chat } from '@/chat/chat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
 @Injectable()
 export class ChatService {
   private redisClient: RedisClientType;
@@ -19,6 +20,35 @@ export class ChatService {
   async onModuleInit() {
     this.redisClient = this.redisService.getClient();
   }
+
+  async addActiveUser(
+    roomId: number,
+    socketId: string,
+    user: UserIdentityDto,
+  ): Promise<void> {
+    const key = `chat:room:${roomId}:online`;
+    await this.redisClient.hSet(key, socketId, JSON.stringify(user));
+  }
+
+  async removeActiveUser(roomId: number, socketId: string): Promise<void> {
+    const key = `chat:room:${roomId}:online`;
+    await this.redisClient.hDel(key, socketId);
+  }
+
+  async getActiveUsers(roomId: number): Promise<UserIdentityDto[]> {
+    const key = `chat:room:${roomId}:online`;
+    const rawValues = await this.redisClient.hVals(key);
+
+    const users = rawValues.map((v) => JSON.parse(v) as UserIdentityDto);
+
+    const uniqueUsersMap = new Map<string, UserIdentityDto>();
+    users.forEach((user) => {
+      uniqueUsersMap.set(user.id, user);
+    });
+
+    return Array.from(uniqueUsersMap.values());
+  }
+
   async getChatHistory(roomId: number): Promise<Message[]> {
     const key = `chat_messages:${roomId}`;
     const history = await this.redisClient.lRange(

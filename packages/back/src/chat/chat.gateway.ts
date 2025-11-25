@@ -77,7 +77,8 @@ export class ChatGateway {
     }
 
     socket.data.user = userDto;
-
+    await this.chatService.addActiveUser(Number(roomId), socket.id, userDto);
+    await this.broadcastActiveUsers(Number(roomId));
     socket.join(`room_${roomId}`);
   }
 
@@ -139,5 +140,20 @@ export class ChatGateway {
       personaId,
       user.isAuthenticated,
     );
+  }
+
+  async handleDisconnect(@ConnectedSocket() socket: Socket) {
+    const roomId = socket.data.roomId;
+
+    if (roomId) {
+      await this.chatService.removeActiveUser(Number(roomId), socket.id);
+
+      await this.broadcastActiveUsers(Number(roomId));
+    }
+  }
+
+  private async broadcastActiveUsers(roomId: number) {
+    const activeUsers = await this.chatService.getActiveUsers(roomId);
+    this.server.to(`room_${roomId}`).emit('active-users', activeUsers);
   }
 }
