@@ -1,5 +1,6 @@
 import { getMe } from "@/app/_asyncApis";
 import { postLogout } from "@/app/_asyncApis/postLogout";
+import { chatRoomQueries } from "@/app/_queries/chatRoomQueries";
 import {
   mutationOptions,
   queryOptions,
@@ -24,6 +25,7 @@ export const userQueries = {
       onSettled: () => {
         toast.success("로그아웃 성공!");
         queryClient.invalidateQueries({ queryKey: userQueries.all() });
+        queryClient.invalidateQueries({ queryKey: chatRoomQueries.all() });
       },
     });
   },
