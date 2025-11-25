@@ -1,3 +1,16 @@
+# [1.12.0](https://github.com/rhehfl/doran-doran/compare/v1.11.0...v1.12.0) (2025-11-25)
+
+
+### Bug Fixes
+
+* 로그인 정보 유지안됨 수정 ([1471360](https://github.com/rhehfl/doran-doran/commit/1471360b30a06b6f2b7bb879619c868d58448f48))
+
+
+### Features
+
+* CI에 common build 단계 추가 ([75d39f7](https://github.com/rhehfl/doran-doran/commit/75d39f7d687fc5e25bb1ee7b083403ae8675b14d))
+* 로그아웃 추가 ([ce51cf9](https://github.com/rhehfl/doran-doran/commit/ce51cf935d9d373a78a4dbedbe9fec3d58d98050))
+
 # [1.11.0](https://github.com/rhehfl/doran-doran/compare/v1.10.0...v1.11.0) (2025-11-23)
 
 
