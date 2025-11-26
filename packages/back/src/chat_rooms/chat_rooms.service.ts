@@ -122,13 +122,14 @@ export class ChatRoomsService {
     return this.chatRoomRepository.find({
       where: { isPublic: true },
       order: { updatedAt: 'DESC' },
-    });
-  }
-
-  async getPublicChatRooms(): Promise<ChatRoom[]> {
-    return this.chatRoomRepository.find({
-      where: { isPublic: true },
-      order: { updatedAt: 'DESC' },
+      select: {
+        id: true,
+        userId: true,
+        createdAt: true,
+        updatedAt: true,
+        persona: { id: true, name: true, image: true },
+      },
+      relations: ['persona'],
     });
   }
 

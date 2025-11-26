@@ -27,7 +27,7 @@ export default function ChatHeader() {
 
   return (
     <header className="flex flex-col items-center w-full bg-gray-50 justify-center">
-      <div className="w-full flex justify-between mt-5 px-20">
+      <div className="w-full flex justify-between mt-5 px-5 lg:px-15">
         <Image src="/logo.webp" alt="로고" width={60} height={60} />
         <div className="justify-end ">
           <Suspense
@@ -39,7 +39,7 @@ export default function ChatHeader() {
           </Suspense>
         </div>
       </div>
-      <div className="min-w-full bg-gray-100 p-1.5 rounded-full flex items-center relative lg:min-w-lg">
+      <div className="min-w-full px-4 bg-gray-100 p-1.5 rounded-full flex items-center relative lg:min-w-lg">
         <button
           onClick={() => handleTabChange("private")}
           className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${

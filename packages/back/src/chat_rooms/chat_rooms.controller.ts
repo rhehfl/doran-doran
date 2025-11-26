@@ -46,7 +46,7 @@ export class ChatRoomsController {
   }
   @Get()
   publicFindAll(): Promise<ChatRoom[]> {
-    return this.chatRoomsService.getPublicChatRooms();
+    return this.chatRoomsService.getAllPublicChatRooms();
   }
 
   @Get('/me')
