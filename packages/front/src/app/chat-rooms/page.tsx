@@ -8,9 +8,9 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { chatRoomQueries } from "@/app/_queries";
 import { SsgoiTransition } from "@ssgoi/react";
-import { Header } from "@/app/_components";
 import { getAllMyChatRooms, getAllPublicChatRooms } from "@/app/_asyncApis";
 import { cookieParser } from "@/app/_utils";
+import ChatHeader from "@/app/chat-rooms/_components/ChatHeader";
 
 export default async function ChatRoomsPage() {
   const queryClient = new QueryClient();
@@ -40,7 +40,7 @@ export default async function ChatRoomsPage() {
   const dehydratedState = dehydrate(queryClient);
   return (
     <SsgoiTransition id="/chat-rooms" className="relative">
-      <Header />
+      <ChatHeader />
       <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen p-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-8 text-center">
