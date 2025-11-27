@@ -18,6 +18,7 @@ import {
   animals,
   uniqueNamesGenerator,
 } from 'unique-names-generator';
+import { createAnonymous } from '@/utils/createAnonymous';
 
 @WebSocketGateway({
   transports: ['websocket'],
@@ -56,20 +57,7 @@ export class ChatGateway {
       };
     }
 
-    const randomNickname = uniqueNamesGenerator({
-      dictionaries: [adjectives, animals],
-      separator: ' ',
-      seed: userDto.id,
-      style: 'capital',
-    });
-    const randomProfileUrl = `https://api.dicebear.com/9.x/notionists/svg?seed=${userDto.id}`;
-
-    return {
-      userId: userDto.id,
-      nickname: randomNickname,
-      profileUrl: randomProfileUrl,
-      isAuthenticated: userDto.isAuthenticated,
-    };
+    return createAnonymous(userDto.id);
   }
 
   async handleConnection(@ConnectedSocket() socket: Socket) {
@@ -115,7 +103,8 @@ export class ChatGateway {
 
     socket.data.user = user;
     await this.chatService.addActiveUser(Number(roomId), socket.id, user);
-    await this.broadcastActiveUsers(Number(roomId));
+    this.server.to(`room_${roomId}`).emit('join-user', user);
+
     socket.join(`room_${roomId}`);
   }
 

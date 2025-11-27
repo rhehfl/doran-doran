@@ -14,6 +14,7 @@ import {
   animals,
   uniqueNamesGenerator,
 } from 'unique-names-generator';
+import { createAnonymous } from '@/utils/createAnonymous';
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -38,20 +39,8 @@ export class AuthController {
         };
       }
     }
-    const randomNickname = uniqueNamesGenerator({
-      dictionaries: [adjectives, animals],
-      separator: ' ',
-      seed: user.id,
-      style: 'capital',
-    });
-    const randomProfileUrl = `https://api.dicebear.com/9.x/notionists/svg?seed=${user.id}`;
 
-    return {
-      userId: user.id,
-      nickname: randomNickname,
-      profileUrl: randomProfileUrl,
-      isAuthenticated: user.isAuthenticated,
-    };
+    return createAnonymous(user.id);
   }
 
   @Get('google')
