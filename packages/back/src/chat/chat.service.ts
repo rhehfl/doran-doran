@@ -130,4 +130,21 @@ export class ChatService {
     const key = `chat:room:${roomId}:prompt`;
     return await this.redisClient.hGet(key, 'systemInstruction');
   }
+
+  async deleteRoomCache(roomId: number): Promise<void> {
+    const keys = [
+      `chat:room:${roomId}:online`, // 현재 접속자 목록
+      `chat_messages:${roomId}`, // 채팅 내역 (List)
+      `chat:room:${roomId}:prompt`, // 시스템 프롬프트
+    ];
+
+    try {
+      await this.redisClient.del(keys);
+    } catch (error) {
+      console.error(
+        `[Redis] Failed to delete cache for room ${roomId}:`,
+        error,
+      );
+    }
+  }
 }

@@ -7,11 +7,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CookieModule } from '@/common/cookie/cookie.module';
 import { User } from '@/user/user.entity';
 import { AuthModule } from '@/auth/auth.module';
+import { ChatModule } from '@/chat/chat.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ChatRoom, User]),
     CookieModule,
+    ChatModule,
     AuthModule,
   ],
   controllers: [ChatRoomsController],

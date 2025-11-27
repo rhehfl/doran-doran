@@ -12,6 +12,7 @@ import { ChatModule } from './chat/chat.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { CookieModule } from '@/common/cookie/cookie.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CookieModule } from '@/common/cookie/cookie.module';
         typeORMConfig(configService),
     }),
     RedisModule,
+    ScheduleModule.forRoot(),
     SessionModule,
     PersonasModule,
     ChatRoomsModule,
