@@ -1,6 +1,6 @@
 // src/chat/chat.controller.ts
 
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { GetChatHistoryQueryDto } from '@/chat/dto/get-chat-history.dto/get-chat-history.dto';
 import { ChatService } from '@/chat/chat.service';
 
@@ -16,5 +16,16 @@ export class ChatController {
     const history = await this.chatService.getChatHistory(Number(roomId));
 
     return history;
+  }
+
+  @Get(':roomId/active')
+  async getActiveUsers(@Param('roomId') roomId: string) {
+    const activeUsers = await this.chatService.getActiveUsers(Number(roomId));
+
+    return {
+      roomId: Number(roomId),
+      count: activeUsers.length,
+      users: activeUsers,
+    };
   }
 }

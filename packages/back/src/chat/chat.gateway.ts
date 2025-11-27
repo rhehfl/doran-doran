@@ -1,5 +1,4 @@
 import { AuthService } from '@/auth/auth.service';
-import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
 import { ChatService } from '@/chat/chat.service';
 import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';
 import { GeminiService } from '@/gemini/gemini.service';
@@ -10,8 +9,10 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { ERROR_CODE, Message } from 'common';
 import { Server, Socket } from 'socket.io';
+import { UserService } from '@/user/user.service';
+import { ERROR_CODE, Message, User } from 'common';
+import { createAnonymous } from '@/utils/createAnonymous';
 
 @WebSocketGateway({
   transports: ['websocket'],
@@ -33,21 +34,30 @@ export class ChatGateway {
     private readonly geminiService: GeminiService,
     private readonly chatRoomsService: ChatRoomsService,
     private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
+
+  async getCurrentUser(cookieHeader: string | undefined): Promise<User> {
+    const userDto =
+      await this.authService.getUserIdentityFromHeader(cookieHeader);
+    const findUser = await this.userService.findOne(userDto.id);
+
+    if (findUser) {
+      return {
+        userId: findUser.id,
+        nickname: findUser.nickname,
+        profileUrl: findUser.profileUrl,
+        isAuthenticated: true,
+      };
+    }
+
+    return createAnonymous(userDto.id);
+  }
 
   async handleConnection(@ConnectedSocket() socket: Socket) {
     const cookieHeader = socket.handshake.headers.cookie;
     const roomId = socket.handshake.query.roomId;
-    let userDto: UserIdentityDto;
-
-    try {
-      userDto = await this.authService.getUserIdentityFromHeader(cookieHeader);
-    } catch (error) {
-      console.error('[WS Connection Error] Auth failed:', error.message);
-      socket.emit('error', { message: ERROR_CODE.UNAUTHORIZED });
-      socket.disconnect();
-      return;
-    }
+    let user: User;
 
     if (!roomId) {
       socket.emit('error', { message: '방 ID가 없습니다.' });
@@ -56,9 +66,18 @@ export class ChatGateway {
     }
 
     try {
+      user = await this.getCurrentUser(cookieHeader);
+    } catch (error) {
+      console.error('[WS Connection Error] Auth failed:', error.message);
+      socket.emit('error', { message: ERROR_CODE.UNAUTHORIZED });
+      socket.disconnect();
+      return;
+    }
+
+    try {
       const data = await this.chatRoomsService.getChatRoomById(
         Number(roomId),
-        userDto.id,
+        user.userId,
       );
       socket.data.roomId = roomId;
       socket.data.personaId = data.persona.id;
@@ -76,7 +95,9 @@ export class ChatGateway {
       return;
     }
 
-    socket.data.user = userDto;
+    socket.data.user = user;
+    await this.chatService.addActiveUser(Number(roomId), socket.id, user);
+    this.server.to(`room_${roomId}`).emit('join-user', user);
 
     socket.join(`room_${roomId}`);
   }
@@ -87,7 +108,7 @@ export class ChatGateway {
     @MessageBody() payload: Message,
   ) {
     const roomId = socket.data.roomId as string;
-    const user = socket.data.user as UserIdentityDto;
+    const user = socket.data.user as User;
     const personaId = socket.data.personaId as number;
     const roomName = `room_${roomId}`;
 
@@ -102,7 +123,7 @@ export class ChatGateway {
       await this.chatService.saveChatMessage(
         Number(roomId),
         payload,
-        user.id,
+        user.userId,
         personaId,
         user.isAuthenticated,
       );
@@ -127,7 +148,7 @@ export class ChatGateway {
     );
 
     const aiMessage: Message = {
-      userId: user.id,
+      userId: user.userId,
       author: 'Gemini',
       content: aiResponseText,
     };
@@ -135,9 +156,24 @@ export class ChatGateway {
     await this.chatService.saveChatMessage(
       Number(roomId),
       aiMessage,
-      user.id,
+      user.userId,
       personaId,
       user.isAuthenticated,
     );
+  }
+
+  async handleDisconnect(@ConnectedSocket() socket: Socket) {
+    const roomId = socket.data.roomId;
+    console.log(socket.data.user);
+    if (roomId) {
+      await this.chatService.removeActiveUser(Number(roomId), socket.id);
+
+      this.server.to(`room_${roomId}`).emit('leave-user', socket.data.user);
+    }
+  }
+
+  private async broadcastActiveUsers(roomId: number) {
+    const activeUsers = await this.chatService.getActiveUsers(roomId);
+    this.server.to(`room_${roomId}`).emit('active-users', activeUsers);
   }
 }

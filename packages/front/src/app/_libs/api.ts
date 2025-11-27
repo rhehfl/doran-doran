@@ -22,16 +22,14 @@ export const externalApi = ky.create({
           }
 
           try {
-            console.log(request.url);
-            await ky.post("api/auth/refresh", options);
+            await ky.post(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/refresh`,
+              options,
+            );
 
             return ky(request);
           } catch (error) {
-            console.error("세션이 만료되었습니다. 다시 로그인해주세요.");
-
-            if (typeof window !== "undefined") {
-              window.location.href = "/";
-            }
+            console.error("세션이 만료되었습니다. 다시 로그인해주세요.", error);
             throw error;
           }
         }

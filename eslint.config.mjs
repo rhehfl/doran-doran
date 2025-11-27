@@ -45,7 +45,7 @@ export default [
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs["core-web-vitals"].rules,
-      "react/react-in-jsx-scope": "off", // Next.js 17+ 에서는 React import 불필요
+      "react/react-in-jsx-scope": "off",
     },
     settings: {
       next: {

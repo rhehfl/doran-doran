@@ -2,10 +2,11 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { RedisClientType } from 'redis';
 import { RedisService } from '@/core/redis/redis.service';
-import { Message } from 'common';
+import { Message, User } from 'common';
 import { Chat } from '@/chat/chat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { OnEvent } from '@nestjs/event-emitter';
 @Injectable()
 export class ChatService {
   private redisClient: RedisClientType;
@@ -19,6 +20,34 @@ export class ChatService {
   async onModuleInit() {
     this.redisClient = this.redisService.getClient();
   }
+
+  async addActiveUser(
+    roomId: number,
+    socketId: string,
+    user: User,
+  ): Promise<void> {
+    const key = `chat:room:${roomId}:online`;
+    await this.redisClient.hSet(key, socketId, JSON.stringify(user));
+  }
+
+  async removeActiveUser(roomId: number, socketId: string): Promise<void> {
+    const key = `chat:room:${roomId}:online`;
+    await this.redisClient.hDel(key, socketId);
+  }
+
+  async getActiveUsers(roomId: number): Promise<User[]> {
+    const key = `chat:room:${roomId}:online`;
+    const rawValues = await this.redisClient.hVals(key);
+
+    const users = rawValues.map((v) => JSON.parse(v) as User);
+    const uniqueUsersMap = new Map<string, User>();
+    users.forEach((user) => {
+      uniqueUsersMap.set(user.userId, user);
+    });
+
+    return Array.from(uniqueUsersMap.values());
+  }
+
   async getChatHistory(roomId: number): Promise<Message[]> {
     const key = `chat_messages:${roomId}`;
     const history = await this.redisClient.lRange(
@@ -101,5 +130,27 @@ export class ChatService {
   async getSystemInstruction(roomId: number): Promise<string | null> {
     const key = `chat:room:${roomId}:prompt`;
     return await this.redisClient.hGet(key, 'systemInstruction');
+  }
+
+  async deleteRoomCache(roomId: number): Promise<void> {
+    const keys = [
+      `chat:room:${roomId}:online`, // 현재 접속자 목록
+      `chat_messages:${roomId}`, // 채팅 내역 (List)
+      `chat:room:${roomId}:prompt`, // 시스템 프롬프트
+    ];
+
+    try {
+      await this.redisClient.del(keys);
+    } catch (error) {
+      console.error(
+        `[Redis] Failed to delete cache for room ${roomId}:`,
+        error,
+      );
+    }
+  }
+
+  @OnEvent('rooms.deleted')
+  async handleRoomsDeleted(payload: { roomIds: number[] }) {
+    await Promise.all(payload.roomIds.map((id) => this.deleteRoomCache(id)));
   }
 }

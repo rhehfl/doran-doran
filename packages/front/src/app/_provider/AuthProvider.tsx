@@ -1,3 +1,4 @@
+import { SOCIAL_ORIGINS } from "@/app/_constants";
 import { userQueries } from "@/app/_queries";
 import { cookieParser } from "@/app/_utils";
 import {
@@ -15,11 +16,13 @@ export default async function AuthProvider({
 }) {
   const headersList = await headers();
   const referer = headersList.get("referer") || "";
-  const isFromGoogle = referer.includes("accounts.google.com");
+  const isSocialRedirect = SOCIAL_ORIGINS.some((origin) =>
+    referer.includes(origin),
+  );
 
   const queryClient = new QueryClient();
 
-  if (!isFromGoogle) {
+  if (!isSocialRedirect) {
     const cookieStore = await cookies();
     const cookieString = cookieParser(cookieStore);
     const userQuery = userQueries.me({

@@ -1,32 +1,30 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useEffect, useRef } from "react";
 
-interface ModalProps {
-  children: React.ReactNode;
-}
-
-export default function Modal({ children }: ModalProps) {
+export default function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-
-  const handleClose = useCallback(() => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const handleClose = (el: React.MouseEvent<HTMLDivElement>) => {
+    if (el.target !== divRef.current) return;
     router.back();
-  }, [router]);
+    console.log("Modal closed");
+  };
 
-  const handleBackgroundClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) {
-        handleClose();
-      }
-    },
-    [handleClose],
-  );
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") router.back();
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, []);
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/50"
-      onClick={handleBackgroundClick}
+      ref={divRef}
+      className="fixed top-0 w-full z-50 flex items-center justify-center bg-black/60 "
+      onClick={handleClose}
     >
       {children}
     </div>

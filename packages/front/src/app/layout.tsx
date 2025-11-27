@@ -18,8 +18,10 @@ const geistMono = Geist_Mono({
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
@@ -47,7 +49,10 @@ export default function RootLayout({
           <ReactQueryProvider>
             <GetSession />
             <AuthProvider>
-              <SsgoiProvider>{children}</SsgoiProvider>
+              <SsgoiProvider>
+                {children}
+                {modal}
+              </SsgoiProvider>
               <ToastContainer />
             </AuthProvider>
           </ReactQueryProvider>

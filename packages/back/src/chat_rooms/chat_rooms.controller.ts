@@ -45,8 +45,9 @@ export class ChatRoomsController {
     return this.chatRoomsService.createChatRoom(completeDto);
   }
   @Get()
-  publicFindAll(): Promise<ChatRoom[]> {
-    return this.chatRoomsService.getPublicChatRooms();
+  @UseGuards(AuthGuard)
+  publicFindAll(@User() user: UserIdentityDto): Promise<ChatRoom[]> {
+    return this.chatRoomsService.getAllPublicChatRooms(user.id);
   }
 
   @Get('/me')

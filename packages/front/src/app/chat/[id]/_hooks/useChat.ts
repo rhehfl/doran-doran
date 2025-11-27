@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Message } from "common";
+import { Message, User } from "common";
 import { io, Socket } from "socket.io-client";
 import { useAuth } from "@/app/_hooks";
+import { toast } from "react-toastify";
 
 interface UseChatOptions {
   onStream?: (chunk: string) => void;
@@ -62,6 +63,10 @@ export const useChat = (roomId?: number, options?: UseChatOptions) => {
     newSocket.on("save-error", () => {
       setError("save-error");
       newSocket.disconnect();
+    });
+
+    newSocket.on("join-user", (user: User) => {
+      toast.info(`${user.nickname}님 어서오세요!`, {});
     });
 
     return () => {

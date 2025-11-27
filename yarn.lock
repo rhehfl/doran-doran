@@ -1672,6 +1672,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nestjs/event-emitter@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@nestjs/event-emitter@npm:3.0.1"
+  dependencies:
+    eventemitter2: "npm:6.4.9"
+  peerDependencies:
+    "@nestjs/common": ^10.0.0 || ^11.0.0
+    "@nestjs/core": ^10.0.0 || ^11.0.0
+  checksum: 10c0/27c503b280c65e2bbebb21a8b208eed116b3ee7fe69724ad2a8ecbacb944a575a12d23d0ac027e05624c9c98c2b5fc90c4348c0cff28d9786311ede8a0c8eb6e
+  languageName: node
+  linkType: hard
+
 "@nestjs/jwt@npm:^11.0.1":
   version: 11.0.1
   resolution: "@nestjs/jwt@npm:11.0.1"
@@ -1738,6 +1750,18 @@ __metadata:
     "@nestjs/websockets": ^11.0.0
     rxjs: ^7.1.0
   checksum: 10c0/b6a44d79ab835bff45f6354febf38e5dd1e8cb3d764684d6e7c084ed8309e2e1517de57766cbede8101bc447b0d0356dc5cc42491737c19c7d0b2f87bbbca258
+  languageName: node
+  linkType: hard
+
+"@nestjs/schedule@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "@nestjs/schedule@npm:6.0.1"
+  dependencies:
+    cron: "npm:4.3.3"
+  peerDependencies:
+    "@nestjs/common": ^10.0.0 || ^11.0.0
+    "@nestjs/core": ^10.0.0 || ^11.0.0
+  checksum: 10c0/220af7977cc93f831223ac750dff5af64ce5d0e46a4970a8221e7ae233524fd6d0137ec0a5ecf12c5e6cb3d3acc9d7d0a8aa1525c053f8cdcfb26e4a0db283a8
   languageName: node
   linkType: hard
 
@@ -3035,6 +3059,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cron@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "@types/cron@npm:2.4.3"
+  dependencies:
+    cron: "npm:*"
+  checksum: 10c0/c34b92d8e57512db03ad638f0c62bf937dc07dd672298394acc1d88dc7f2e659ea6ebf9a4227bfa577ecbf02d5b3993039ecdc58812805f8875d627e6c16074f
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^4.0.0":
   version: 4.1.12
   resolution: "@types/debug@npm:4.1.12"
@@ -3186,6 +3219,13 @@ __metadata:
     "@types/ms": "npm:*"
     "@types/node": "npm:*"
   checksum: 10c0/0688ac8fb75f809201cb7e18a12b9d80ce539cb9dd27e1b01e11807cb1a337059e899b8ee3abc3f2c9417f02e363a3069d9eab9ef9724b1da1f0e10713514f94
+  languageName: node
+  linkType: hard
+
+"@types/luxon@npm:~3.7.0":
+  version: 3.7.1
+  resolution: "@types/luxon@npm:3.7.1"
+  checksum: 10c0/2db30c13b58adcd86daa447faa3ba59515fe907ead8ee3e6bb716d662812af0619d712f6c1eb190cdd7f9d2c00444c3ecd80af0f36e8143eb0c5e7339d6b2aca
   languageName: node
   linkType: hard
 
@@ -4729,17 +4769,20 @@ __metadata:
     "@nestjs/common": "npm:^11.0.1"
     "@nestjs/config": "npm:^4.0.2"
     "@nestjs/core": "npm:^11.0.1"
+    "@nestjs/event-emitter": "npm:^3.0.1"
     "@nestjs/jwt": "npm:^11.0.1"
     "@nestjs/mapped-types": "npm:*"
     "@nestjs/passport": "npm:^11.0.5"
     "@nestjs/platform-express": "npm:^11.0.1"
     "@nestjs/platform-socket.io": "npm:^11.1.6"
+    "@nestjs/schedule": "npm:^6.0.1"
     "@nestjs/schematics": "npm:^11.0.0"
     "@nestjs/testing": "npm:^11.0.1"
     "@nestjs/typeorm": "npm:^11.0.0"
     "@nestjs/websockets": "npm:^11.1.6"
     "@types/add": "npm:^2"
     "@types/cookie-parser": "npm:^1.4.9"
+    "@types/cron": "npm:^2.4.3"
     "@types/express": "npm:^5.0.0"
     "@types/jest": "npm:^30.0.0"
     "@types/node": "npm:^22.10.7"
@@ -4781,6 +4824,7 @@ __metadata:
     typeorm-extension: "npm:^3.7.1"
     typescript: "npm:^5.7.3"
     typescript-eslint: "npm:^8.20.0"
+    unique-names-generator: "npm:^4.7.1"
     uuid: "npm:^13.0.0"
   languageName: unknown
   linkType: soft
@@ -5702,6 +5746,26 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: 10c0/157cbc59b2430ae9a90034a5f3a1b398b6738bf510f713edc4d4e45e169bc514d3d99dd34d8d01ca7ae7830b5b8b537e46ae8f3c8f932371b0875c0151d7ec91
+  languageName: node
+  linkType: hard
+
+"cron@npm:*":
+  version: 4.3.4
+  resolution: "cron@npm:4.3.4"
+  dependencies:
+    "@types/luxon": "npm:~3.7.0"
+    luxon: "npm:~3.7.0"
+  checksum: 10c0/df24f25f3483c26b8913fa73ca947719c70ce7ac2ee924804af487c325fda92270e12d5911200151f557e8a0601f9019137a1f3e934fe37d5af87003c4d0b66c
+  languageName: node
+  linkType: hard
+
+"cron@npm:4.3.3":
+  version: 4.3.3
+  resolution: "cron@npm:4.3.3"
+  dependencies:
+    "@types/luxon": "npm:~3.7.0"
+    luxon: "npm:~3.7.0"
+  checksum: 10c0/f58976120a069406419d3b690f3e30a2d66c19de87712ce988bed47bbabc9e39c317e1793bdff92a466a57b9174aff7c40912c57f08f3198eb59838f10bf1247
   languageName: node
   linkType: hard
 
@@ -6829,6 +6893,13 @@ __metadata:
   version: 1.8.1
   resolution: "etag@npm:1.8.1"
   checksum: 10c0/12be11ef62fb9817314d790089a0a49fae4e1b50594135dcb8076312b7d7e470884b5100d249b28c18581b7fd52f8b485689ffae22a11ed9ec17377a33a08f84
+  languageName: node
+  linkType: hard
+
+"eventemitter2@npm:6.4.9":
+  version: 6.4.9
+  resolution: "eventemitter2@npm:6.4.9"
+  checksum: 10c0/b2adf7d9f1544aa2d95ee271b0621acaf1e309d85ebcef1244fb0ebc7ab0afa6ffd5e371535d0981bc46195ad67fd6ff57a8d1db030584dee69aa5e371a27ea7
   languageName: node
   linkType: hard
 
@@ -10002,6 +10073,13 @@ __metadata:
   dependencies:
     yallist: "npm:^3.0.2"
   checksum: 10c0/89b2ef2ef45f543011e38737b8a8622a2f8998cddf0e5437174ef8f1f70a8b9d14a918ab3e232cb3ba343b7abddffa667f0b59075b2b80e6b4d63c3de6127482
+  languageName: node
+  linkType: hard
+
+"luxon@npm:~3.7.0":
+  version: 3.7.2
+  resolution: "luxon@npm:3.7.2"
+  checksum: 10c0/ed8f0f637826c08c343a29dd478b00628be93bba6f068417b1d8896b61cb61c6deacbe1df1e057dbd9298334044afa150f9aaabbeb3181418ac8520acfdc2ae2
   languageName: node
   linkType: hard
 
@@ -14668,6 +14746,13 @@ __metadata:
   dependencies:
     unique-slug: "npm:^5.0.0"
   checksum: 10c0/38ae681cceb1408ea0587b6b01e29b00eee3c84baee1e41fd5c16b9ed443b80fba90c40e0ba69627e30855570a34ba8b06702d4a35035d4b5e198bf5a64c9ddc
+  languageName: node
+  linkType: hard
+
+"unique-names-generator@npm:^4.7.1":
+  version: 4.7.1
+  resolution: "unique-names-generator@npm:4.7.1"
+  checksum: 10c0/db07b9a0fee6eac4a21cf567c9744ee97895aa744d51ec913557205173a65c1a7a4d12470295796acb7247e6646e7975c340bb634c7adf41e5d950fa5cf94375
   languageName: node
   linkType: hard
 
