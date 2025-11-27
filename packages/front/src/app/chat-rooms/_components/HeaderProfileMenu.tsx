@@ -41,9 +41,9 @@ export default function HeaderProfileMenu() {
             })}
           >
             {user.isAuthenticated ? (
-              <UserMenu user={user} onLogout={onLogout} />
+              <UserMenu user={user} onClose={closeMenu} onLogout={onLogout} />
             ) : (
-              <GuestMenu user={user} />
+              <GuestMenu user={user} onClose={closeMenu} />
             )}
           </div>
         </>
@@ -51,7 +51,16 @@ export default function HeaderProfileMenu() {
     </div>
   );
 }
-function UserMenu({ user, onLogout }: { user: User; onLogout: () => void }) {
+
+function UserMenu({
+  user,
+  onLogout,
+  onClose,
+}: {
+  user: User;
+  onLogout: () => void;
+  onClose: () => void;
+}) {
   return (
     <>
       <div className="flex items-center gap-3 mb-4 pb-4 border-b">
@@ -62,7 +71,10 @@ function UserMenu({ user, onLogout }: { user: User; onLogout: () => void }) {
         </div>
       </div>
       <button
-        onClick={() => onLogout()}
+        onClick={() => {
+          onClose();
+          onLogout();
+        }}
         className="w-full text-left px-2 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
       >
         로그아웃
@@ -70,7 +82,7 @@ function UserMenu({ user, onLogout }: { user: User; onLogout: () => void }) {
     </>
   );
 }
-function GuestMenu({ user }: { user: User }) {
+function GuestMenu({ user, onClose }: { user: User; onClose: () => void }) {
   return (
     <>
       <div className="flex items-center gap-3 mb-4">
@@ -84,12 +96,14 @@ function GuestMenu({ user }: { user: User }) {
           </p>
         </div>
       </div>
-      <Link
-        href={`/auth/login?redirect=/chat-rooms`}
-        className="block w-full text-center bg-indigo-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg"
-      >
-        3초 만에 로그인하고 저장
-      </Link>
+      <button onClick={onClose} className="w-full">
+        <Link
+          href={`/login?redirect=/chat-rooms`}
+          className="block w-full text-center bg-indigo-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg"
+        >
+          3초 만에 로그인하고 저장
+        </Link>
+      </button>
     </>
   );
 }

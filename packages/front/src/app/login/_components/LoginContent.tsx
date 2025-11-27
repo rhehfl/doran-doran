@@ -1,16 +1,15 @@
 "use client";
 
+import { GoogleLoginButton } from "@/app/_components";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { GoogleLoginButton } from "@/app/_components";
 
-// Next.js에서 useSearchParams를 쓰려면 Suspense로 감싸야 안전합니다.
-export default function LoginPage() {
+export default function LoginContent() {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect") || "/";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4 py-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100 animate-fade-in-up">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-50 rounded-full mb-4 text-3xl">
