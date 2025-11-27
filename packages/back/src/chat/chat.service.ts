@@ -2,12 +2,10 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { RedisClientType } from 'redis';
 import { RedisService } from '@/core/redis/redis.service';
-import { Message } from 'common';
+import { Message, User } from 'common';
 import { Chat } from '@/chat/chat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
-import { ActiveUserDto } from '@/chat/dto/active-user-dto';
 @Injectable()
 export class ChatService {
   private redisClient: RedisClientType;
@@ -25,7 +23,7 @@ export class ChatService {
   async addActiveUser(
     roomId: number,
     socketId: string,
-    user: ActiveUserDto,
+    user: User,
   ): Promise<void> {
     const key = `chat:room:${roomId}:online`;
     await this.redisClient.hSet(key, socketId, JSON.stringify(user));
@@ -36,12 +34,12 @@ export class ChatService {
     await this.redisClient.hDel(key, socketId);
   }
 
-  async getActiveUsers(roomId: number): Promise<ActiveUserDto[]> {
+  async getActiveUsers(roomId: number): Promise<User[]> {
     const key = `chat:room:${roomId}:online`;
     const rawValues = await this.redisClient.hVals(key);
 
-    const users = rawValues.map((v) => JSON.parse(v) as ActiveUserDto);
-    const uniqueUsersMap = new Map<string, ActiveUserDto>();
+    const users = rawValues.map((v) => JSON.parse(v) as User);
+    const uniqueUsersMap = new Map<string, User>();
     users.forEach((user) => {
       uniqueUsersMap.set(user.userId, user);
     });

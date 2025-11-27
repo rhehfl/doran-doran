@@ -52,7 +52,6 @@ export default memo(function ChatCard({
         className={`flex lg:items-end mb-2 lg:flex-row flex-col  lg:justify-start items-start`}
       >
         <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#E0E7FF] order-1">
-          다른유저
           <div className="text-sm">
             <Markdown>{content}</Markdown>
           </div>
