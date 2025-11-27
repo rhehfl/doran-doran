@@ -1,3 +1,29 @@
+# [1.13.0](https://github.com/rhehfl/doran-doran/compare/v1.12.0...v1.13.0) (2025-11-27)
+
+
+### Bug Fixes
+
+* profileIcon 로직 수정 ([cb8bdeb](https://github.com/rhehfl/doran-doran/commit/cb8bdeb5b19b601765cde26b2a3486d7ef1e7f26))
+* 헤더 호버효과 변경 ([8c3f930](https://github.com/rhehfl/doran-doran/commit/8c3f930f66a8fb08408b2efdfb265aa6360f2872))
+
+
+### Features
+
+* 로그인버튼 구현 ([1fab0d6](https://github.com/rhehfl/doran-doran/commit/1fab0d6bf4291ada33bd36cf8db95fa03449cb38))
+* 로그인페이지 추가 및 프로필 디자인 변경 ([9aac9f9](https://github.com/rhehfl/doran-doran/commit/9aac9f91b498aca41239b25aa6f15e05466126a8))
+* 불필요한 코드 제거 및 타입 정의 개선 ([5a8495d](https://github.com/rhehfl/doran-doran/commit/5a8495d3c6ef15876f7e713b2c43963d0d2933ff))
+* 소켓연결시 유저정보 가져오기 ([30a3785](https://github.com/rhehfl/doran-doran/commit/30a3785e62a45852464e162388094d61274985dc))
+* 유저 접속시 알람 추가 ([000a37e](https://github.com/rhehfl/doran-doran/commit/000a37e6805fb484569cf12c8b39abf82e27a0e2))
+* 이벤트방식으로 변경 ([bd3a407](https://github.com/rhehfl/doran-doran/commit/bd3a40753ef37f71991b5e3297ae93fd70e8b76b))
+* 익명 채팅방 제거 로직 추가 ([7a39de2](https://github.com/rhehfl/doran-doran/commit/7a39de263db4c1710f93c58a9a3320d00447ad62))
+* 익명유저 랜덤 id, image 부여 ([7dc15c0](https://github.com/rhehfl/doran-doran/commit/7dc15c0cc9502b6b4b6ba4f5962238244ed0ac02))
+* 익명유저 발급 로직 함수로 분리 ([092d017](https://github.com/rhehfl/doran-doran/commit/092d01730279d30d02b44263da8bb781dfad1f73))
+* 참여유저 명수 표시 ([921fd56](https://github.com/rhehfl/doran-doran/commit/921fd56226d22053a782dbae4f3d3e036fd385db))
+* 채팅룸 헤더 추가 ([a57844c](https://github.com/rhehfl/doran-doran/commit/a57844c0a45456c18db3ef23d14ccaf31ad1f309))
+* 채팅방 리스트 애니메이션추가 ([e162545](https://github.com/rhehfl/doran-doran/commit/e1625457057ddd4bca40486539327eab0818f5d6))
+* 채팅방 목록 API 개선 및 UI 수정 ([e617762](https://github.com/rhehfl/doran-doran/commit/e617762eabbc10400f6aa04db67d483389b20a1a))
+* 채팅방 활성화유저 api추가 ([8a6cea5](https://github.com/rhehfl/doran-doran/commit/8a6cea5b01b4072e753a20dec7c52bcf0a2ba477))
+
 # [1.12.0](https://github.com/rhehfl/doran-doran/compare/v1.11.0...v1.12.0) (2025-11-25)
 
 
