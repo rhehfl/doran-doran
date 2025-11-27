@@ -6,6 +6,7 @@ import { Message, User } from 'common';
 import { Chat } from '@/chat/chat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { OnEvent } from '@nestjs/event-emitter';
 @Injectable()
 export class ChatService {
   private redisClient: RedisClientType;
@@ -146,5 +147,10 @@ export class ChatService {
         error,
       );
     }
+  }
+
+  @OnEvent('rooms.deleted')
+  async handleRoomsDeleted(payload: { roomIds: number[] }) {
+    await Promise.all(payload.roomIds.map((id) => this.deleteRoomCache(id)));
   }
 }
