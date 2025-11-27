@@ -5,6 +5,7 @@ import {
   getChatRoomInfo,
   postChatRoom,
 } from "@/app/_asyncApis";
+import { getChatRoomActive } from "@/app/_asyncApis/getChatRoomActive";
 import { patchChatRoomStatus } from "@/app/_asyncApis/patchChatRoomStatus";
 import {
   mutationOptions,
@@ -37,6 +38,11 @@ export const chatRoomQueries = {
     queryOptions({
       queryKey: [...chatRoomQueries.details(), roomId, "history"] as const,
       queryFn: () => getChatRoomHistory(roomId),
+    }),
+  active: (roomId: number) =>
+    queryOptions({
+      queryKey: [...chatRoomQueries.details(), roomId, "active"] as const,
+      queryFn: () => getChatRoomActive(roomId),
     }),
 };
 

@@ -170,11 +170,11 @@ export class ChatGateway {
 
   async handleDisconnect(@ConnectedSocket() socket: Socket) {
     const roomId = socket.data.roomId;
-
+    console.log(socket.data.user);
     if (roomId) {
       await this.chatService.removeActiveUser(Number(roomId), socket.id);
 
-      await this.broadcastActiveUsers(Number(roomId));
+      this.server.to(`room_${roomId}`).emit('leave-user', socket.data.user);
     }
   }
 

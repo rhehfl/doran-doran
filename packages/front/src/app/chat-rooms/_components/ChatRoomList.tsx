@@ -4,6 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChatRoomCard } from "@/app/chat-rooms/_components";
 import { chatRoomQueries } from "@/app/_queries";
 import { useSearchParams } from "next/navigation";
+import PublicChatRoomCard from "@/app/chat-rooms/_components/PublicChatRoomCard";
 
 export default function ChatRoomList() {
   const searchParams = useSearchParams();
@@ -26,7 +27,7 @@ export default function ChatRoomList() {
     return (
       <ul className="flex flex-col gap-5">
         {publicChatRoomList.map((chat) => (
-          <ChatRoomCard key={chat.id} {...chat} />
+          <PublicChatRoomCard key={chat.id} {...chat} />
         ))}
       </ul>
     );
