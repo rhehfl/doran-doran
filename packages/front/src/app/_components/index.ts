@@ -5,5 +5,5 @@ export { default as GithubLoginButton } from "./GithubLoginButton";
 export { default as GoogleLoginButton } from "./GoogleLoginButton";
 export { default as Header } from "./Header";
 export { default as Modal } from "./Modal";
-export { default as ProfileIcon } from "./ProfileIcon";
+export { default as UserProfileIcon } from "./UserProfileIcon";
 export { default as ThemeSwitcher } from "./ThemeSwitcher";
