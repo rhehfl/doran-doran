@@ -42,10 +42,10 @@ export default function ChatHeader() {
       <div className="min-w-full px-4 bg-gray-100 p-1.5 rounded-full flex items-center relative lg:min-w-lg">
         <button
           onClick={() => handleTabChange("private")}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
+          className={`flex-1 flex cursor-pointer items-center justify-center gap-2 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
             currentTab === "private"
               ? "bg-white text-[#584BF2] shadow-sm"
-              : "text-gray-500 hover:text-gray-700"
+              : "text-gray-500 hover:text-gray-700 hover:bg-gray-300"
           }`}
         >
           <FiMessageSquare size={18} />
@@ -54,10 +54,10 @@ export default function ChatHeader() {
 
         <button
           onClick={() => handleTabChange("public")}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
+          className={`flex-1 flex items-center cursor-pointer justify-center gap-2 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
             currentTab === "public"
               ? "bg-white text-[#584BF2] shadow-sm"
-              : "text-gray-500 hover:text-gray-700"
+              : "text-gray-500 hover:text-gray-700 hover:bg-gray-300"
           }`}
         >
           <FiUsers size={18} />
