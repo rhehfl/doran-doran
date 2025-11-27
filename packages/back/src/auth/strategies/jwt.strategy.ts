@@ -20,6 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async validate(payload: any): Promise<UserIdentityDto> {
+    console.log('JWT Strategy validate called with payload:', payload);
     return {
       id: payload.sub,
       isAuthenticated: true,

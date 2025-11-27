@@ -9,6 +9,11 @@ import { AuthGuard as JWTAuthGuard } from '@/auth/auth.guard';
 import { User } from 'common';
 import { User as UserDecorator } from '@/auth/user.decorator';
 import { UserService } from '@/user/user.service';
+import {
+  adjectives,
+  animals,
+  uniqueNamesGenerator,
+} from 'unique-names-generator';
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -33,8 +38,20 @@ export class AuthController {
         };
       }
     }
+    const randomNickname = uniqueNamesGenerator({
+      dictionaries: [adjectives, animals],
+      separator: ' ',
+      seed: user.id,
+      style: 'capital',
+    });
+    const randomProfileUrl = `https://api.dicebear.com/9.x/notionists/svg?seed=${user.id}`;
 
-    return null;
+    return {
+      userId: user.id,
+      nickname: randomNickname,
+      profileUrl: randomProfileUrl,
+      isAuthenticated: user.isAuthenticated,
+    };
   }
 
   @Get('google')

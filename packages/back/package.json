@@ -57,6 +57,7 @@
     "socket.io": "^4.8.1",
     "typeorm": "^0.3.27",
     "typeorm-extension": "^3.7.1",
+    "unique-names-generator": "^4.7.1",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

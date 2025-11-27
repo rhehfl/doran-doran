@@ -16,18 +16,24 @@ export default function ChatRoomList() {
     chatRoomQueries.publicList(),
   );
 
-  if (chatRoomList.length === 0) {
-    return (
-      <p className="text-center text-gray-500">참여중인 채팅방이 없습니다.</p>
-    );
-  }
   if (currentTab === "public") {
+    if (publicChatRoomList.length === 0) {
+      return (
+        <p className="text-center text-gray-500">공개된 채팅방이 없습니다.</p>
+      );
+    }
+
     return (
       <ul className="flex flex-col gap-5">
         {publicChatRoomList.map((chat) => (
           <ChatRoomCard key={chat.id} {...chat} />
         ))}
       </ul>
+    );
+  }
+  if (chatRoomList.length === 0) {
+    return (
+      <p className="text-center text-gray-500">참여중인 채팅방이 없습니다.</p>
     );
   }
 
