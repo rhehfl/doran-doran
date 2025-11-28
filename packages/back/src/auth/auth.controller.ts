@@ -9,11 +9,6 @@ import { AuthGuard as JWTAuthGuard } from '@/auth/auth.guard';
 import { User } from 'common';
 import { User as UserDecorator } from '@/auth/user.decorator';
 import { UserService } from '@/user/user.service';
-import {
-  adjectives,
-  animals,
-  uniqueNamesGenerator,
-} from 'unique-names-generator';
 import { createAnonymous } from '@/utils/createAnonymous';
 @Controller('auth')
 export class AuthController {

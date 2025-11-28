@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Not, Repository } from 'typeorm';
+import { FindOperator, Not, Repository } from 'typeorm';
 
 import { CreateChatRoomDto } from '@/chat_rooms/dto/create-chat-room.dto';
 import { ChatRoom } from '@/chat_rooms/chat-room.entity';
@@ -123,7 +123,8 @@ export class ChatRoomsService {
   }
 
   async getAllPublicChatRooms(excludeUserId?: string): Promise<ChatRoom[]> {
-    const whereCondition: any = { isPublic: true };
+    const whereCondition: { isPublic: boolean; userId?: FindOperator<string> } =
+      { isPublic: true };
 
     if (excludeUserId) {
       whereCondition.userId = Not(excludeUserId);

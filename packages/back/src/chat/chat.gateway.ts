@@ -1,5 +1,4 @@
 import { AuthService } from '@/auth/auth.service';
-import { UserIdentityDto } from '@/auth/dto/user-identity.dto';
 import { ChatService } from '@/chat/chat.service';
 import { ChatRoomsService } from '@/chat_rooms/chat_rooms.service';
 import { GeminiService } from '@/gemini/gemini.service';
@@ -13,11 +12,6 @@ import {
 import { Server, Socket } from 'socket.io';
 import { UserService } from '@/user/user.service';
 import { ERROR_CODE, Message, User } from 'common';
-import {
-  adjectives,
-  animals,
-  uniqueNamesGenerator,
-} from 'unique-names-generator';
 import { createAnonymous } from '@/utils/createAnonymous';
 
 @WebSocketGateway({
