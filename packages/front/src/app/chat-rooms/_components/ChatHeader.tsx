@@ -2,7 +2,10 @@
 
 import { Suspense } from "react";
 import Image from "next/image";
-import { ChatRoomTab, HeaderProfileMenu } from "@/app/chat-rooms/_components";
+import {
+  ChatRoomTab,
+  SuspenseHeaderProfileMenu,
+} from "@/app/chat-rooms/_components";
 
 export default function ChatHeader() {
   return (
@@ -15,7 +18,7 @@ export default function ChatHeader() {
               <div className="w-10 h-10 rounded-full bg-gray-300 animate-pulse" />
             }
           >
-            <HeaderProfileMenu />
+            <SuspenseHeaderProfileMenu />
           </Suspense>
         </div>
       </div>

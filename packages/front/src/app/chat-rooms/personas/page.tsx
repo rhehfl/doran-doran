@@ -1,7 +1,7 @@
 "use client";
 
 import { BackButton } from "@/app/_components";
-import { PersonaContainer } from "@/app/chat-rooms/personas/_components";
+import { SuspensePersonaContainer } from "@/app/chat-rooms/personas/_components";
 import { SsgoiTransition } from "@ssgoi/react";
 import { Suspense } from "react";
 
@@ -22,7 +22,7 @@ export default function PersonasPage() {
             </p>
           </div>
           <Suspense fallback={<div>Loading...</div>}>
-            <PersonaContainer />
+            <SuspensePersonaContainer />
           </Suspense>
         </div>
       </main>

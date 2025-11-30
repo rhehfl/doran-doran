@@ -1,12 +1,12 @@
 "use client";
 
-import { useAuth } from "@/app/_hooks";
+import { useSuspenseAuth } from "@/app/_hooks";
 import {
   ChatSendForm,
   AILoadingMessage,
   EmptyChatCard,
+  SuspenseChatList,
 } from "@/app/chat/[id]/_components";
-import ChatList from "@/app/chat/[id]/_components/ChatList";
 import {
   useChat,
   useChatHistoryUpdater,
@@ -16,8 +16,8 @@ import { Message } from "common";
 import { useParams } from "next/navigation";
 import { Suspense } from "react";
 
-export default function ChatRoom() {
-  const user = useAuth();
+export default function SuspenseChatRoom() {
+  const user = useSuspenseAuth();
   const { id } = useParams();
   const { displayedText, addChunk, setText, reset } = useTypingEffect();
   const { historyUpdater } = useChatHistoryUpdater(Number(id));
@@ -45,7 +45,7 @@ export default function ChatRoom() {
     <>
       <div className="px-4 flex-grow overflow-y-auto">
         <Suspense fallback={<div>Loading...</div>}>
-          <ChatList streamingMessage={displayedText} />
+          <SuspenseChatList streamingMessage={displayedText} />
         </Suspense>
         {isAiThinking && !displayedText && <EmptyChatCard />}
         {displayedText && <AILoadingMessage streamingMessage={displayedText} />}

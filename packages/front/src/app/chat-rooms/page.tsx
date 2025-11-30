@@ -1,4 +1,4 @@
-import { SuspenseChatRoomList } from "@/app/chat-rooms/_components";
+import { SuspenseChatRoomListWrapper } from "@/app/chat-rooms/_components";
 import {
   dehydrate,
   HydrationBoundary,
@@ -50,7 +50,7 @@ export default async function ChatRoomsPage() {
             현재 채팅 목록
           </h1>
           <HydrationBoundary state={dehydratedState}>
-            <SuspenseChatRoomList />
+            <SuspenseChatRoomListWrapper />
           </HydrationBoundary>
           <div className="pt-8 text-center ">
             <Link href="/chat-rooms/personas">

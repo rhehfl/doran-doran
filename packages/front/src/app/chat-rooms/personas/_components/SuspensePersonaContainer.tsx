@@ -4,7 +4,7 @@ import { personaQueries } from "@/app/_queries/personaQueries";
 import { PersonaCard } from "@/app/chat-rooms/personas/_components";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-export default function PersonaContainer() {
+export default function SuspensePersonaContainer() {
   const { data: personas } = useSuspenseQuery(personaQueries.list());
 
   return (

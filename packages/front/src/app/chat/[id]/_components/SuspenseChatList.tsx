@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react";
 interface ChatListProps {
   streamingMessage?: string;
 }
-export default function ChatList({ streamingMessage }: ChatListProps) {
+export default function SuspenseChatList({ streamingMessage }: ChatListProps) {
   const { id } = useParams();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 

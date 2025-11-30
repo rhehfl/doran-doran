@@ -1,6 +1,6 @@
 "use client";
 
-import { ProfileCard } from "@/app/chat/[id]/_components/";
+import { SuspenseProfileCard } from "@/app/chat/[id]/_components/";
 import { Suspense } from "react";
 import { IoChatboxEllipses } from "react-icons/io5";
 
@@ -15,7 +15,7 @@ export default function SideBar() {
           <div className="ml-2 font-bold text-2xl dark:text-white">채팅방</div>
         </div>
         <Suspense fallback={<>Loading......</>}>
-          <ProfileCard size="large" />
+          <SuspenseProfileCard size="large" />
         </Suspense>
       </div>
     </>
