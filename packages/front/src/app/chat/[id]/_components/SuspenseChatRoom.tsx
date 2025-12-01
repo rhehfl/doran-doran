@@ -8,7 +8,7 @@ import {
   SuspenseChatList,
 } from "@/app/chat/[id]/_components";
 import {
-  useChat,
+  useSuspenseChat,
   useChatHistoryUpdater,
   useTypingEffect,
 } from "@/app/chat/[id]/_hooks";
@@ -21,7 +21,7 @@ export default function SuspenseChatRoom() {
   const { id } = useParams();
   const { displayedText, addChunk, setText, reset } = useTypingEffect();
   const { historyUpdater } = useChatHistoryUpdater(Number(id));
-  const { isAiThinking, sendMessage } = useChat(Number(id), {
+  const { isAiThinking, sendMessage } = useSuspenseChat(Number(id), {
     onStream: (chunk: string) => addChunk(chunk),
     onStreamError: (message: string) => {
       setText(`[오류 발생] ${message}`);

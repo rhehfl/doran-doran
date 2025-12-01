@@ -8,7 +8,7 @@ const DynamicSideBarWithNoSSR = dynamic(
   { ssr: false },
 );
 const DynamicChatRoomWithNoSSR = dynamic(
-  () => import("@/app/chat/[id]/_components/ChatRoom"),
+  () => import("@/app/chat/[id]/_components/SuspenseChatRoom"),
   { ssr: false },
 );
 
