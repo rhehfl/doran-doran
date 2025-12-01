@@ -22,12 +22,6 @@ export default memo(function ChatCard({
   if (author === "Gemini") {
     return (
       <div
-        ref={transition({
-          key: `chat-card-${id}`,
-          ...slide({
-            direction: "up",
-          }),
-        })}
         className={`flex lg:items-end mb-2 lg:flex-row flex-col  lg:justify-start items-start`}
       >
         <Suspense
@@ -68,12 +62,6 @@ export default memo(function ChatCard({
 
   return (
     <div
-      ref={transition({
-        key: `chat-card-${id}`,
-        ...slide({
-          direction: "up",
-        }),
-      })}
       className={`flex lg:items-end mb-2 lg:flex-row flex-col lg:justify-end items-end`}
     >
       <div className="relative max-w-lg px-4 py-2 rounded-lg order-2 bg-[#E0E7FF]">

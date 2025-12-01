@@ -45,10 +45,11 @@ export default function SuspenseChatRoom() {
     <>
       <div className="px-4 flex-grow overflow-y-auto">
         <Suspense fallback={<div>Loading...</div>}>
-          <SuspenseChatList streamingMessage={displayedText} />
+          <SuspenseChatList />
         </Suspense>
         {isAiThinking && !displayedText && <EmptyChatCard />}
         {displayedText && <AILoadingMessage streamingMessage={displayedText} />}
+        <div ref={messagesEndRef} />
       </div>
       <ChatSendForm onSubmit={sendMessage} />
     </>

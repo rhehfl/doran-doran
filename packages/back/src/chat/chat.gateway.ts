@@ -164,7 +164,6 @@ export class ChatGateway {
 
   async handleDisconnect(@ConnectedSocket() socket: Socket) {
     const roomId = socket.data.roomId;
-    console.log(socket.data.user);
     if (roomId) {
       await this.chatService.removeActiveUser(Number(roomId), socket.id);
 
