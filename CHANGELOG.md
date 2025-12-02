@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/rhehfl/doran-doran/compare/v1.14.0...v1.14.1) (2025-12-02)
+
+
+### Bug Fixes
+
+* 로그인 모달 안뜨는 버그 해결 ([0315ce4](https://github.com/rhehfl/doran-doran/commit/0315ce4e4f28b5573926737003562bb5bdba4bfd))
+
 # [1.14.0](https://github.com/rhehfl/doran-doran/compare/v1.13.0...v1.14.0) (2025-12-02)
 
 
