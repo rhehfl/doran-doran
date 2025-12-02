@@ -1,3 +1,10 @@
+## [1.14.2](https://github.com/rhehfl/doran-doran/compare/v1.14.1...v1.14.2) (2025-12-02)
+
+
+### Bug Fixes
+
+* 모달 트랜지션 제거 ([22993a3](https://github.com/rhehfl/doran-doran/commit/22993a39175772f1de1c310bf1c11e59147fba26))
+
 ## [1.14.1](https://github.com/rhehfl/doran-doran/compare/v1.14.0...v1.14.1) (2025-12-02)
 
 
