@@ -41,7 +41,7 @@ export default async function ChatRoomsPage() {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <SsgoiTransition id="/chat-rooms" className="relative">
+    <SsgoiTransition id="/chat-rooms">
       <ChatHeader />
       <SaveCurrentPathToLocalStorage />
       <div className="bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 min-h-screen p-8">

@@ -88,13 +88,14 @@ export default async function Home() {
                 </div>
                 <div>
                   <div className="mt-12">
-                    <Link href="/chat-rooms">
-                      <button className="cursor-pointer group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 text-lg font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 bg-gradient-to-r from-orange-500 to-amber-500">
-                        <span className="absolute h-full w-full bg-gradient-to-r from-orange-500 to-amber-500 transition-all duration-500 ease-in-out group-hover:w-0"></span>
-                        <span className="relative rounded-full bg-slate-900 px-8 py-4 transition-colors duration-300 group-hover:bg-transparent">
-                          대화 시작하기!
-                        </span>
-                      </button>
+                    <Link
+                      href="/chat-rooms"
+                      className="cursor-pointer group relative inline-flex items-center justify-center overflow-hidden rounded-full p-0.5 text-lg font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 bg-gradient-to-r from-orange-500 to-amber-500"
+                    >
+                      <span className="absolute h-full w-full bg-gradient-to-r from-orange-500 to-amber-500 transition-all duration-500 ease-in-out group-hover:w-0"></span>
+                      <span className="relative rounded-full bg-slate-900 px-8 py-4 transition-colors duration-300 group-hover:bg-transparent">
+                        대화 시작하기!
+                      </span>
                     </Link>
                   </div>
                 </div>
@@ -204,10 +205,11 @@ export default async function Home() {
             <p className="text-orange-100 text-lg mb-8 max-w-2xl mx-auto">
               망설일 필요 없어요! 당신의 첫 개발 친구가 기다리고 있어요.
             </p>
-            <Link href="/chat-rooms">
-              <button className="rounded-full bg-white px-8 py-4 text-lg font-bold text-orange-600 shadow-lg transition-transform duration-300 hover:scale-105">
-                대화 상대 고르러 가기
-              </button>
+            <Link
+              href="/chat-rooms "
+              className="rounded-full bg-white px-8 py-4 text-lg font-bold text-orange-600 shadow-lg transition-transform duration-300 hover:scale-105"
+            >
+              대화 상대 고르러 가기
             </Link>
           </div>
         </Section>
