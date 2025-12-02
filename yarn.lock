@@ -6711,6 +6711,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-react-suspense-check@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "eslint-plugin-react-suspense-check@npm:1.0.2"
+  peerDependencies:
+    eslint: ">=8.0.0"
+  checksum: 10c0/b69c7aea5ea65c3362ac9c6184ac942c12c8f8965ab596b58d0685b9193fff9a0350fd109b5228f26ac337be29888c17a1a24fb46c2271f8ebda000c608ae29e
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-react@npm:^7.33.2, eslint-plugin-react@npm:^7.34.2, eslint-plugin-react@npm:^7.37.0":
   version: 7.37.5
   resolution: "eslint-plugin-react@npm:7.37.5"
@@ -7423,6 +7432,7 @@ __metadata:
     common: "workspace:*"
     eslint: "npm:^9"
     eslint-config-next: "npm:15.5.2"
+    eslint-plugin-react-suspense-check: "npm:^1.0.2"
     ky: "npm:^1.11.0"
     next: "npm:15.5.2"
     next-themes: "npm:^0.4.6"

@@ -9,7 +9,7 @@ export default function ChatRoomCard({ id, persona }: ChatRoom) {
       <Link href={`/chat/${id}`} passHref>
         <div
           className="p-4 rounded-xl shadow-lg transition duration-300
-                      bg-white dark:bg-gray-800
+                      bg-white dark:bg-gray-700
                       hover:ring-2 hover:ring-indigo-500 dark:hover:ring-indigo-400
                       flex items-center cursor-pointer"
         >

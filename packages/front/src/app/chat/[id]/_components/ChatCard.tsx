@@ -1,10 +1,10 @@
 "use client";
-import { useAuth } from "@/app/_hooks";
-import { ProfileCard } from "@/app/chat/[id]/_components";
+import { useSuspenseAuth } from "@/app/_hooks";
+import { SuspenseProfileCard } from "@/app/chat/[id]/_components";
 import { transition } from "@ssgoi/react";
 import { slide } from "@ssgoi/react/transitions";
 import { Message } from "common";
-import { memo } from "react";
+import { memo, Suspense } from "react";
 import Markdown from "react-markdown";
 
 interface ChatCardProps extends Message {
@@ -17,20 +17,20 @@ export default memo(function ChatCard({
   id,
   content,
 }: ChatCardProps) {
-  const user = useAuth();
+  const user = useSuspenseAuth();
 
   if (author === "Gemini") {
     return (
       <div
-        ref={transition({
-          key: `chat-card-${id}`,
-          ...slide({
-            direction: "up",
-          }),
-        })}
         className={`flex lg:items-end mb-2 lg:flex-row flex-col  lg:justify-start items-start`}
       >
-        <ProfileCard size="small" />
+        <Suspense
+          fallback={
+            <div className="w-8 h-8 rounded-full bg-gray-300 animate-pulse" />
+          }
+        >
+          <SuspenseProfileCard size="small" />
+        </Suspense>
         <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#E0E7FF] order-1">
           <div className="text-sm wrap-anywhere">
             <Markdown>{content}</Markdown>
@@ -62,12 +62,6 @@ export default memo(function ChatCard({
 
   return (
     <div
-      ref={transition({
-        key: `chat-card-${id}`,
-        ...slide({
-          direction: "up",
-        }),
-      })}
       className={`flex lg:items-end mb-2 lg:flex-row flex-col lg:justify-end items-end`}
     >
       <div className="relative max-w-lg px-4 py-2 rounded-lg order-2 bg-[#E0E7FF]">

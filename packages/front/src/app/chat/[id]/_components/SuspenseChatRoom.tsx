@@ -1,12 +1,12 @@
 "use client";
 
-import { useAuth } from "@/app/_hooks";
+import { useSuspenseAuth } from "@/app/_hooks";
 import {
   ChatSendForm,
   AILoadingMessage,
   EmptyChatCard,
+  SuspenseChatList,
 } from "@/app/chat/[id]/_components";
-import ChatList from "@/app/chat/[id]/_components/ChatList";
 import {
   useChat,
   useChatHistoryUpdater,
@@ -14,14 +14,15 @@ import {
 } from "@/app/chat/[id]/_hooks";
 import { Message } from "common";
 import { useParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useRef } from "react";
 
-export default function ChatRoom() {
-  const user = useAuth();
+export default function SuspenseChatRoom() {
+  const user = useSuspenseAuth();
   const { id } = useParams();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { displayedText, addChunk, setText, reset } = useTypingEffect();
   const { historyUpdater } = useChatHistoryUpdater(Number(id));
-  const { isAiThinking, sendMessage } = useChat(Number(id), {
+  const { isAiThinking, sendMessage } = useChat(user, Number(id), {
     onStream: (chunk: string) => addChunk(chunk),
     onStreamError: (message: string) => {
       setText(`[오류 발생] ${message}`);
@@ -45,12 +46,13 @@ export default function ChatRoom() {
     <>
       <div className="px-4 flex-grow overflow-y-auto">
         <Suspense fallback={<div>Loading...</div>}>
-          <ChatList streamingMessage={displayedText} />
+          <SuspenseChatList />
         </Suspense>
         {isAiThinking && !displayedText && <EmptyChatCard />}
         {displayedText && <AILoadingMessage streamingMessage={displayedText} />}
+        <div ref={messagesEndRef} />
       </div>
-      <ChatSendForm onSubmit={sendMessage} />
+      <ChatSendForm onSubmit={sendMessage} messageRef={messagesEndRef} />
     </>
   );
 }

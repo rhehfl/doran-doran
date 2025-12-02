@@ -1,11 +1,21 @@
-// /eslint.config.mjs
-import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
-import nextPlugin from "@next/eslint-plugin-next";
 
-export default [
+export const sharedConfig = [
+  {
+    // 공통 무시 파일들
+    ignores: [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/out/**",
+      "**/build/**",
+      ".yarn/**",
+      "packages/front/next-env.d.ts",
+    ],
+  },
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     rules: {
       "@typescript-eslint/no-unused-vars": [
@@ -18,57 +28,6 @@ export default [
       ],
     },
   },
-  {
-    // 전체 프로젝트에 적용될 기본 설정
-    ignores: [
-      "**/node_modules/**",
-      "**/dist/**",
-      "**/.next/**",
-      "**/out/**",
-      "**/build/**",
-      ".yarn/**",
-      "packages/front/next-env.d.ts",
-    ],
-  },
-  // JavaScript 파일 기본 규칙
-  pluginJs.configs.recommended,
-  // TypeScript 파일 기본 규칙
-  ...tseslint.configs.recommended,
-
-  // React/Next.js (front) 패키지 설정
-  {
-    files: ["packages/front/**/*.{js,jsx,ts,tsx}"],
-    ...pluginReactConfig,
-    plugins: {
-      "@next/next": nextPlugin,
-    },
-    rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs["core-web-vitals"].rules,
-      "react/react-in-jsx-scope": "off",
-    },
-    settings: {
-      next: {
-        rootDir: "packages/front/",
-      },
-      react: {
-        version: "detect",
-      },
-    },
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
-  },
-  // Node.js (back) 패키지 설정
-  {
-    files: ["packages/back/**/*.{js,ts}"],
-    languageOptions: {
-      globals: {
-        ...globals.node,
-      },
-    },
-  },
 ];
+
+export default sharedConfig;

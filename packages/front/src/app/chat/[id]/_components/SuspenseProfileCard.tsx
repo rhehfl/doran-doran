@@ -1,7 +1,7 @@
 "use client";
 
 import ToggleButton from "@/app/_components/ToggleButton";
-import { useAuth } from "@/app/_hooks";
+import { useSuspenseAuth } from "@/app/_hooks";
 import { chatRoomMutations, chatRoomQueries } from "@/app/_queries";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -11,9 +11,9 @@ interface ProfileCardProps {
   size: "small" | "large";
 }
 
-export default function ProfileCard({ size }: ProfileCardProps) {
+export default function SuspenseProfileCard({ size }: ProfileCardProps) {
   const { id } = useParams();
-  const user = useAuth();
+  const user = useSuspenseAuth();
   const { data } = useSuspenseQuery(chatRoomQueries.detail(Number(id)));
   const { mutate } = useMutation(chatRoomMutations.patchStatus(data.id));
   const { persona } = data;

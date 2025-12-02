@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { chatRoomQueries } from "@/app/_queries";
 
-export default function PublicChatRoomCard({ id, persona }: ChatRoom) {
+export default function SuspensePublicChatRoomCard({ id, persona }: ChatRoom) {
   const { data: active } = useSuspenseQuery(chatRoomQueries.active(id));
   return (
     <li>

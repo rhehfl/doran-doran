@@ -4,22 +4,15 @@ import { chatRoomQueries } from "@/app/_queries";
 import { ChatCard } from "@/app/chat/[id]/_components";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
-interface ChatListProps {
-  streamingMessage?: string;
-}
-export default function ChatList({ streamingMessage }: ChatListProps) {
+export default function SuspenseChatList() {
   const { id } = useParams();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { data: messages } = useSuspenseQuery(
     chatRoomQueries.history(Number(id)!),
   );
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, streamingMessage]);
 
   return (
     <>

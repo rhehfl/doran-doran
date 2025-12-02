@@ -3,17 +3,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { UserProfileIcon } from "@/app/_components";
-import { useAuth } from "@/app/_hooks";
+import { useSuspenseAuth } from "@/app/_hooks";
 import { useMutation } from "@tanstack/react-query";
 import { userQueries } from "@/app/_queries";
 import { User } from "common";
 import { transition } from "@ssgoi/react";
 import { slide } from "@ssgoi/react/transitions";
 
-export default function HeaderProfileMenu() {
+export default function SuspenseHeaderProfileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: onLogout } = useMutation(userQueries.logout());
-  const user = useAuth();
+  const user = useSuspenseAuth();
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
