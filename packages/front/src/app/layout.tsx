@@ -49,10 +49,8 @@ export default function RootLayout({
           <ReactQueryProvider>
             <GetSession />
             <AuthProvider>
-              <SsgoiProvider>
-                {children}
-                {modal}
-              </SsgoiProvider>
+              <SsgoiProvider>{children}</SsgoiProvider>
+              {modal}
               <ToastContainer />
             </AuthProvider>
           </ReactQueryProvider>
