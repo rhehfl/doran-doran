@@ -1,3 +1,16 @@
+# [1.14.0](https://github.com/rhehfl/doran-doran/compare/v1.13.0...v1.14.0) (2025-12-02)
+
+
+### Bug Fixes
+
+* import 네이밍수정 ([130e612](https://github.com/rhehfl/doran-doran/commit/130e612c6dcb13f014746ce52d8338dce341d601))
+
+
+### Features
+
+* ChatSendForm에 메시지 스크롤 기능 추가 및 useChat 훅으로 변경 ([b589d32](https://github.com/rhehfl/doran-doran/commit/b589d3277519476e21ebfa50fd84e9cb97714d47))
+* 헤더 및 탭에 다크모드 추가 ([b42a66f](https://github.com/rhehfl/doran-doran/commit/b42a66fb8ad5722dcffcdc73e8ece5b71883e213))
+
 # [1.13.0](https://github.com/rhehfl/doran-doran/compare/v1.12.0...v1.13.0) (2025-11-27)
 
 
