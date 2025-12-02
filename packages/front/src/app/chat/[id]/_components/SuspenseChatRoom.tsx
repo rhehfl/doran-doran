@@ -8,20 +8,21 @@ import {
   SuspenseChatList,
 } from "@/app/chat/[id]/_components";
 import {
-  useSuspenseChat,
+  useChat,
   useChatHistoryUpdater,
   useTypingEffect,
 } from "@/app/chat/[id]/_hooks";
 import { Message } from "common";
 import { useParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useRef } from "react";
 
 export default function SuspenseChatRoom() {
   const user = useSuspenseAuth();
   const { id } = useParams();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { displayedText, addChunk, setText, reset } = useTypingEffect();
   const { historyUpdater } = useChatHistoryUpdater(Number(id));
-  const { isAiThinking, sendMessage } = useSuspenseChat(Number(id), {
+  const { isAiThinking, sendMessage } = useChat(user, Number(id), {
     onStream: (chunk: string) => addChunk(chunk),
     onStreamError: (message: string) => {
       setText(`[오류 발생] ${message}`);
@@ -51,7 +52,7 @@ export default function SuspenseChatRoom() {
         {displayedText && <AILoadingMessage streamingMessage={displayedText} />}
         <div ref={messagesEndRef} />
       </div>
-      <ChatSendForm onSubmit={sendMessage} />
+      <ChatSendForm onSubmit={sendMessage} messageRef={messagesEndRef} />
     </>
   );
 }

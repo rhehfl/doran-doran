@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Message, User } from "common";
 import { io, Socket } from "socket.io-client";
-import { useSuspenseAuth } from "@/app/_hooks";
 import { toast } from "react-toastify";
 
 interface UseChatOptions {
@@ -13,8 +12,11 @@ interface UseChatOptions {
   onMessage?: (message: Message) => void;
 }
 
-export const useSuspenseChat = (roomId?: number, options?: UseChatOptions) => {
-  const user = useSuspenseAuth();
+export const useChat = (
+  user: User,
+  roomId?: number,
+  options?: UseChatOptions,
+) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isAiThinking, setIsAiThinking] = useState(false);

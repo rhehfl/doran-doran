@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { RefObject, useState } from "react";
 import { FiSend } from "react-icons/fi";
 
 interface ChatSendFormProps {
   onSubmit: (msg: string) => void;
+  messageRef?: RefObject<HTMLDivElement | null>;
 }
 
-export default function ChatSendForm({ onSubmit }: ChatSendFormProps) {
+export default function ChatSendForm({
+  onSubmit,
+  messageRef,
+}: ChatSendFormProps) {
   const [inputMessage, setInputMessage] = useState<string>("");
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -15,6 +19,11 @@ export default function ChatSendForm({ onSubmit }: ChatSendFormProps) {
     if (inputMessage.trim() === "") return;
     onSubmit(inputMessage);
     setInputMessage("");
+    if (messageRef && messageRef.current) {
+      setTimeout(() => {
+        messageRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
   };
 
   return (
