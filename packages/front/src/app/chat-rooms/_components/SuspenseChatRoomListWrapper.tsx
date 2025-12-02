@@ -9,7 +9,9 @@ import { Suspense } from "react";
 export default function SuspenseChatRoomListWrapper() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <SuspenseChatRoomList />
+      <section className="h-70 overflow-auto p-4">
+        <SuspenseChatRoomList />
+      </section>
     </Suspense>
   );
 }
