@@ -73,6 +73,7 @@ export class ChatService {
         userId: msg.userId,
         author: msg.author,
         content: msg.content,
+        senderName: msg.senderName,
       };
       multi.rPush(key, JSON.stringify(cacheMsg));
     }
@@ -82,6 +83,7 @@ export class ChatService {
       userId: msg.userId,
       author: msg.author,
       content: msg.content,
+      senderName: msg.senderName,
     }));
   }
 
@@ -89,6 +91,7 @@ export class ChatService {
     roomId: number,
     message: Message,
     userId: string,
+    senderName: string,
     personaId: number,
     isAuthenticated: boolean,
   ) {
@@ -108,8 +111,9 @@ export class ChatService {
       const newChatMessage = this.messageRepository.create({
         roomId,
         author: message.author,
+        senderName,
         content: message.content,
-        userId: userId,
+        userId,
         personaId,
       });
       await this.messageRepository.save(newChatMessage);

@@ -23,6 +23,9 @@ export class Chat {
   @JoinColumn({ name: 'roomId' })
   room: ChatRoom;
 
+  @Column({ type: 'varchar', length: 50 })
+  senderName: string;
+
   @Column({ type: 'varchar' })
   userId: string;
 

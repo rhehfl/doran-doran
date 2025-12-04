@@ -86,6 +86,7 @@ export const useChat = (
       const newMessage: Message = {
         userId: user?.userId || "",
         author: "user",
+        senderName: user.nickname,
         content,
       };
       socket.emit("message", newMessage);

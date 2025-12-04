@@ -32,6 +32,7 @@ export default function SuspenseChatRoom() {
       const finalAiMessage: Message = {
         author: "Gemini",
         content: fullText,
+        senderName: user.nickname,
         userId: user?.userId || "",
       };
       historyUpdater(finalAiMessage);
