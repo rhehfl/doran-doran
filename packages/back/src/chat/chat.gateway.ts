@@ -111,6 +111,7 @@ export class ChatGateway {
     const user = socket.data.user as User;
     const personaId = socket.data.chatRoomPersona.id;
     const personaName = socket.data.chatRoomPersona.name;
+    const profileUrl = socket.data.chatRoomPersona.image;
     const roomName = `room_${roomId}`;
 
     if (!roomId || !user || !personaId) {
@@ -152,6 +153,7 @@ export class ChatGateway {
     const aiMessage: Message = {
       userId: user.userId,
       author: 'Gemini',
+      senderProfileImage: profileUrl,
       senderName: personaName,
       content: aiResponseText,
     };

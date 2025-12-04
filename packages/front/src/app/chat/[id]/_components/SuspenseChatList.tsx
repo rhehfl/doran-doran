@@ -13,7 +13,7 @@ export default function SuspenseChatList() {
   const { data: messages } = useSuspenseQuery(
     chatRoomQueries.history(Number(id)!),
   );
-  console.log(messages);
+
   return (
     <>
       {messages.map((msg, index) => (

@@ -70,6 +70,7 @@ export class ChatService {
     const multi = this.redisClient.multi();
     for (const msg of reversedHistory) {
       const cacheMsg: Message = {
+        senderProfileImage: msg.senderProfileImage,
         userId: msg.userId,
         author: msg.author,
         content: msg.content,
@@ -80,6 +81,7 @@ export class ChatService {
     await multi.exec();
 
     return dbHistory.map((msg) => ({
+      senderProfileImage: msg.senderProfileImage,
       userId: msg.userId,
       author: msg.author,
       content: msg.content,
