@@ -17,6 +17,7 @@ export default memo(function ChatCard({
   id,
   content,
   senderName,
+  senderProfileImage,
 }: ChatCardProps) {
   const user = useSuspenseAuth();
 
@@ -30,7 +31,11 @@ export default memo(function ChatCard({
             <div className="w-8 h-8 rounded-full bg-gray-300 animate-pulse" />
           }
         >
-          <SuspenseProfileCard size="small" />
+          <SuspenseProfileCard
+            size="small"
+            profileUrl={senderProfileImage}
+            name={senderName}
+          />
         </Suspense>
         <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#E0E7FF] order-1">
           <div className="text-sm wrap-anywhere">

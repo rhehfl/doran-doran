@@ -33,6 +33,7 @@ export default function SuspenseChatRoom() {
         author: "Gemini",
         content: fullText,
         senderName: user.nickname,
+        senderProfileImage: user.profileUrl,
         userId: user?.userId || "",
       };
       historyUpdater(finalAiMessage);

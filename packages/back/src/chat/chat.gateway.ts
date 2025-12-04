@@ -80,7 +80,7 @@ export class ChatGateway {
         user.userId,
       );
       socket.data.roomId = roomId;
-      socket.data.chatRoomPersona = chatRoomInfo.personaId;
+      socket.data.chatRoomPersona = chatRoomInfo.persona;
 
       await this.chatService.setSystemInstruction(
         Number(roomId),
@@ -109,6 +109,7 @@ export class ChatGateway {
   ) {
     const roomId = socket.data.roomId as string;
     const user = socket.data.user as User;
+
     const personaId = socket.data.chatRoomPersona.id;
     const personaName = socket.data.chatRoomPersona.name;
     const profileUrl = socket.data.chatRoomPersona.image;
