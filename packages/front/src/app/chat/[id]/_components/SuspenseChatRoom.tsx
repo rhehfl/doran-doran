@@ -1,6 +1,7 @@
 "use client";
 
 import { useSuspenseAuth } from "@/app/_hooks";
+import { chatRoomQueries } from "@/app/_queries";
 import {
   ChatSendForm,
   AILoadingMessage,
@@ -12,6 +13,7 @@ import {
   useChatHistoryUpdater,
   useTypingEffect,
 } from "@/app/chat/[id]/_hooks";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Message } from "common";
 import { useParams } from "next/navigation";
 import { Suspense, useRef } from "react";
@@ -20,6 +22,9 @@ export default function SuspenseChatRoom() {
   const user = useSuspenseAuth();
   const { id } = useParams();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { data: roomInfo } = useSuspenseQuery(
+    chatRoomQueries.detail(Number(id)),
+  );
   const { displayedText, addChunk, setText, reset } = useTypingEffect();
   const { historyUpdater } = useChatHistoryUpdater(Number(id));
   const { isAiThinking, sendMessage } = useChat(user, Number(id), {
@@ -50,8 +55,19 @@ export default function SuspenseChatRoom() {
         <Suspense fallback={<div>Loading...</div>}>
           <SuspenseChatList />
         </Suspense>
-        {isAiThinking && !displayedText && <EmptyChatCard />}
-        {displayedText && <AILoadingMessage streamingMessage={displayedText} />}
+        {isAiThinking && !displayedText && (
+          <EmptyChatCard
+            name={roomInfo.persona.name}
+            profileUrl={roomInfo.persona.image}
+          />
+        )}
+        {displayedText && (
+          <AILoadingMessage
+            streamingMessage={displayedText}
+            name={roomInfo.persona.name}
+            profileUrl={roomInfo.persona.image}
+          />
+        )}
         <div ref={messagesEndRef} />
       </div>
       <ChatSendForm onSubmit={sendMessage} messageRef={messagesEndRef} />

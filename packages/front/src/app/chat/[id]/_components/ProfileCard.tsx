@@ -8,7 +8,7 @@ interface ProfileCardProps {
   name: string;
 }
 
-export default function SuspenseProfileCard({
+export default function ProfileCard({
   size,
   profileUrl,
   name,

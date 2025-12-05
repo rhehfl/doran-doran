@@ -1,10 +1,10 @@
 "use client";
 import { useSuspenseAuth } from "@/app/_hooks";
-import { SuspenseProfileCard } from "@/app/chat/[id]/_components";
+import { ProfileCard } from "@/app/chat/[id]/_components";
 import { transition } from "@ssgoi/react";
 import { slide } from "@ssgoi/react/transitions";
 import { Message } from "common";
-import { memo, Suspense } from "react";
+import { memo } from "react";
 import Markdown from "react-markdown";
 
 interface ChatCardProps extends Message {
@@ -26,17 +26,11 @@ export default memo(function ChatCard({
       <div
         className={`flex lg:items-end mb-2 lg:flex-row flex-col  lg:justify-start items-start`}
       >
-        <Suspense
-          fallback={
-            <div className="w-8 h-8 rounded-full bg-gray-300 animate-pulse" />
-          }
-        >
-          <SuspenseProfileCard
-            size="small"
-            profileUrl={senderProfileImage}
-            name={senderName}
-          />
-        </Suspense>
+        <ProfileCard
+          size="small"
+          profileUrl={senderProfileImage}
+          name={senderName}
+        />
         <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#E0E7FF] order-1">
           <div className="text-sm wrap-anywhere">
             <Markdown>{content}</Markdown>
@@ -57,6 +51,11 @@ export default memo(function ChatCard({
         })}
         className={`flex lg:items-end mb-2 lg:flex-row flex-col  lg:justify-start items-start`}
       >
+        <ProfileCard
+          size="small"
+          profileUrl={senderProfileImage}
+          name={senderName}
+        />
         <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#E0E7FF] order-1">
           <div className="text-sm">
             <Markdown>{content}</Markdown>
@@ -71,6 +70,11 @@ export default memo(function ChatCard({
     <div
       className={`flex lg:items-end mb-2 lg:flex-row flex-col lg:justify-end items-end`}
     >
+      <ProfileCard
+        size="small"
+        profileUrl={senderProfileImage}
+        name={senderName}
+      />
       <div className="relative max-w-lg px-4 py-2 rounded-lg order-2 bg-[#E0E7FF]">
         <div className="text-sm">
           <Markdown>{content}</Markdown>

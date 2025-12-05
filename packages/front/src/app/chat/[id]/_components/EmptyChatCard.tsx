@@ -1,9 +1,16 @@
-import SuspenseProfileCard from "@/app/chat/[id]/_components/SuspenseProfileCard";
 import { transition } from "@ssgoi/react";
 import { fade } from "@ssgoi/react/transitions";
 import { Suspense } from "react";
+import { ProfileCard } from "@/app/chat/[id]/_components";
 
-export default function EmptyChatCard() {
+interface EmptyChatCardProps {
+  name: string;
+  profileUrl: string;
+}
+export default function EmptyChatCard({
+  name,
+  profileUrl,
+}: EmptyChatCardProps) {
   return (
     <div
       className="flex items-center space-x-2"
@@ -18,7 +25,7 @@ export default function EmptyChatCard() {
             <div className="w-8 h-8 rounded-full bg-gray-300 animate-pulse" />
           }
         >
-          <SuspenseProfileCard size="small" />
+          <ProfileCard size="small" name={name} profileUrl={profileUrl} />
         </Suspense>
         <div className="relative max-w-lg py-5 rounded-lg bg-[#d7d9dc] animate-pulse">
           <div className="text-sm w-30" />
