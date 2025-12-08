@@ -13,12 +13,11 @@ export default function ProfileCard({
   profileUrl,
   name,
 }: ProfileCardProps) {
-  console.log(profileUrl);
   if (size === "small") {
     return (
       <div className="flex flex-col min-w-15 items-center space-y-2 mr-2">
         <Image
-          src={`${profileUrl}`}
+          src={`/${profileUrl}`}
           className="dark:rounded-full"
           alt="Avatar"
           width={32}
