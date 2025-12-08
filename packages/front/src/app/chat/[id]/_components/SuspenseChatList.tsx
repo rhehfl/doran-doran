@@ -1,5 +1,6 @@
 "use client";
 
+import { useSuspenseAuth } from "@/app/_hooks";
 import { chatRoomQueries } from "@/app/_queries";
 import { ChatCard } from "@/app/chat/[id]/_components";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -9,6 +10,7 @@ import { useRef } from "react";
 export default function SuspenseChatList() {
   const { id } = useParams();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const user = useSuspenseAuth();
 
   const { data: messages } = useSuspenseQuery(
     chatRoomQueries.history(Number(id)!),
@@ -17,7 +19,12 @@ export default function SuspenseChatList() {
   return (
     <>
       {messages.map((msg, index) => (
-        <ChatCard key={index} id={index} {...msg} />
+        <ChatCard
+          key={index}
+          id={index}
+          {...msg}
+          currentUserId={user?.userId}
+        />
       ))}
       <div ref={messagesEndRef} />
     </>

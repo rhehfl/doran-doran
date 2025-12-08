@@ -1,6 +1,23 @@
 "use client";
+import dynamic from "next/dynamic";
 
-import { SuspenseChatRoom, SuspenseSideBar } from "@/app/chat/[id]/_components";
+const SuspenseChatRoom = dynamic(
+  () =>
+    import("@/app/chat/[id]/_components").then((mod) => mod.SuspenseChatRoom),
+  {
+    ssr: false,
+    loading: () => <p>채팅방 로딩 중...</p>,
+  },
+);
+
+const SuspenseSideBar = dynamic(
+  () =>
+    import("@/app/chat/[id]/_components").then((mod) => mod.SuspenseSideBar),
+  {
+    ssr: false,
+    loading: () => <div className="w-64 bg-gray-100 h-full" />,
+  },
+);
 import { SsgoiTransition } from "@ssgoi/react";
 import { Suspense } from "react";
 

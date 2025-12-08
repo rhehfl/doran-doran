@@ -1,6 +1,5 @@
 import { transition } from "@ssgoi/react";
 import { fade } from "@ssgoi/react/transitions";
-import { Suspense } from "react";
 import { ProfileCard } from "@/app/chat/[id]/_components";
 
 interface EmptyChatCardProps {
@@ -20,13 +19,7 @@ export default function EmptyChatCard({
       })}
     >
       <div className="flex items-end mb-2">
-        <Suspense
-          fallback={
-            <div className="w-8 h-8 rounded-full bg-gray-300 animate-pulse" />
-          }
-        >
-          <ProfileCard size="small" name={name} profileUrl={profileUrl} />
-        </Suspense>
+        <ProfileCard size="small" name={name} profileUrl={profileUrl} />
         <div className="relative max-w-lg py-5 rounded-lg bg-[#d7d9dc] animate-pulse">
           <div className="text-sm w-30" />
         </div>

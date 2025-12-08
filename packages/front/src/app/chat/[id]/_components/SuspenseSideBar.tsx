@@ -2,7 +2,6 @@
 
 import { ProfileCard } from "@/app/chat/[id]/_components/";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Suspense } from "react";
 import { IoChatboxEllipses } from "react-icons/io5";
 import { chatRoomQueries } from "@/app/_queries";
 import { useParams } from "next/navigation";
@@ -21,13 +20,11 @@ export default function SuspenseSideBar() {
           </div>
           <div className="ml-2 font-bold text-2xl dark:text-white">채팅방</div>
         </div>
-        <Suspense fallback={<>Loading......</>}>
-          <ProfileCard
-            size="large"
-            name={roomInfo.persona.name}
-            profileUrl={roomInfo.persona.image}
-          />
-        </Suspense>
+        <ProfileCard
+          size="large"
+          name={roomInfo.persona.name}
+          profileUrl={roomInfo.persona.image}
+        />
       </div>
     </>
   );

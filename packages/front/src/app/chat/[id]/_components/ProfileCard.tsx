@@ -13,15 +13,17 @@ export default function ProfileCard({
   profileUrl,
   name,
 }: ProfileCardProps) {
+  console.log(profileUrl);
   if (size === "small") {
     return (
       <div className="flex flex-col min-w-15 items-center space-y-2 mr-2">
         <Image
-          src={`/${profileUrl}`}
+          src={`${profileUrl}`}
           className="dark:rounded-full"
           alt="Avatar"
           width={32}
           height={32}
+          unoptimized
         />
         <span className="text-xs text-gray-500 break-words max-w-[50px] text-center dark:text-white">
           {name}
@@ -39,6 +41,7 @@ export default function ProfileCard({
           width={80}
           height={80}
           className="h-full w-full"
+          unoptimized
         />
       </div>
       <div className="dark:text-white text-sm font-semibold mt-2">{name}</div>
