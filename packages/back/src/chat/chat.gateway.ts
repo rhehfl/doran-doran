@@ -130,6 +130,7 @@ export class ChatGateway {
         user.nickname,
         personaId,
         user.isAuthenticated,
+        user.profileUrl,
       );
     } catch (error) {
       this.server.to(roomName).emit('save-error', {
@@ -166,6 +167,7 @@ export class ChatGateway {
       user.nickname,
       personaId,
       user.isAuthenticated,
+      profileUrl,
     );
   }
 

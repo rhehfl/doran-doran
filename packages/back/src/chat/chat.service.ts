@@ -96,6 +96,7 @@ export class ChatService {
     senderName: string,
     personaId: number,
     isAuthenticated: boolean,
+    profileImage: string,
   ) {
     if (!isAuthenticated && message.author !== 'Gemini') {
       const userMessageCount = await this.messageRepository.count({
@@ -117,6 +118,7 @@ export class ChatService {
         content: message.content,
         userId,
         personaId,
+        senderProfileImage: profileImage,
       });
       await this.messageRepository.save(newChatMessage);
     } catch (error) {
