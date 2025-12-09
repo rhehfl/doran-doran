@@ -1,3 +1,16 @@
+# [1.15.0](https://github.com/rhehfl/doran-doran/compare/v1.14.2...v1.15.0) (2025-12-09)
+
+
+### Features
+
+* API 경로 수정 및 프로필 카드 컴포넌트 개선 ([48acdfa](https://github.com/rhehfl/doran-doran/commit/48acdfaaa87e07291a9d04817b715f8bf2dd2341))
+* 채팅 메세지에 프로필이미지 추가 ([b2432da](https://github.com/rhehfl/doran-doran/commit/b2432da658bd3b2868f77d835f60166a8c90dbf4))
+* 채팅 메시지에 발신자 이름 추가 및 관련 로직 수정 ([baeaf19](https://github.com/rhehfl/doran-doran/commit/baeaf19f8a108aeca1a0fd5ee337bbfe48e867b9))
+* 채팅 메시지에 발신자 프로필 이미지 및 이름 추가 ([cf938f3](https://github.com/rhehfl/doran-doran/commit/cf938f3662eb49e8b54d29a4560f15e5855d1d7e))
+* 채팅 메시지에 프로필 이미지 추가 및 관련 로직 수정 ([5536d11](https://github.com/rhehfl/doran-doran/commit/5536d11c93971a0be9ad0d59b045fdb803fba640))
+* 채팅 컴포넌트 개선 및 프로필 카드 로딩 최적화 ([3d34d5e](https://github.com/rhehfl/doran-doran/commit/3d34d5e256eac4ca5a8147dff1af21dc4f2048dc))
+* 프로필 카드 컴포넌트로 변경 및 관련 로직 수정 ([3e2dad1](https://github.com/rhehfl/doran-doran/commit/3e2dad1a6f353fd218fe4743c038060a8c3d1f3d))
+
 ## [1.14.2](https://github.com/rhehfl/doran-doran/compare/v1.14.1...v1.14.2) (2025-12-02)
 
 
