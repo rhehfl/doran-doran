@@ -1,16 +1,22 @@
 "use client";
 
-import { ProfileCard } from "@/app/chat/[id]/_components/";
+import {
+  ProfileCard,
+  RoomVisibilityToggle,
+} from "@/app/chat/[id]/_components/";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { IoChatboxEllipses } from "react-icons/io5";
 import { chatRoomQueries } from "@/app/_queries";
 import { useParams } from "next/navigation";
+import { useSuspenseAuth } from "@/app/_hooks";
 
 export default function SuspenseSideBar() {
   const { id } = useParams();
   const { data: roomInfo } = useSuspenseQuery(
     chatRoomQueries.detail(Number(id)),
   );
+  const user = useSuspenseAuth();
+
   return (
     <>
       <div className="dark:bg-gray-800 dark:border dark:border-r-2 dark:border-gray-700 flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 hidden md:flex">
@@ -25,6 +31,15 @@ export default function SuspenseSideBar() {
           name={roomInfo.persona.name}
           profileUrl={roomInfo.persona.image}
         />
+        {user.userId === roomInfo.userId && (
+          <div className="w-full flex items-center mt-3 flex-col">
+            <span>채팅방 {roomInfo.isPublic ? "공개" : "비공개"}</span>
+            <RoomVisibilityToggle
+              defaultChecked={roomInfo.isPublic}
+              roomId={roomInfo.id}
+            />
+          </div>
+        )}
       </div>
     </>
   );
