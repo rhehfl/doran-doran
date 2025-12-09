@@ -3,6 +3,7 @@ export { default as ChatCard } from "./ChatCard";
 export { default as ChatSendForm } from "./ChatSendForm";
 export { default as EmptyChatCard } from "./EmptyChatCard";
 export { default as ProfileCard } from "./ProfileCard";
-export { default as SuspenseSideBar } from "./SuspenseSideBar";
+export { default as RoomVisibilityToggle } from "./RoomVisibilityToggle";
 export { default as SuspenseChatList } from "./SuspenseChatList";
 export { default as SuspenseChatRoom } from "./SuspenseChatRoom";
+export { default as SuspenseSideBar } from "./SuspenseSideBar";
