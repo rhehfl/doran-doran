@@ -22,10 +22,7 @@ export const externalApi = ky.create({
           }
 
           try {
-            await ky.post(
-              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/refresh`,
-              options,
-            );
+            await ky.post(`api/auth/refresh`, options);
 
             return ky(request);
           } catch (error) {

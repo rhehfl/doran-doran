@@ -1,10 +1,16 @@
 "use client";
 
-import { SuspenseProfileCard } from "@/app/chat/[id]/_components/";
-import { Suspense } from "react";
+import { ProfileCard } from "@/app/chat/[id]/_components/";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { IoChatboxEllipses } from "react-icons/io5";
+import { chatRoomQueries } from "@/app/_queries";
+import { useParams } from "next/navigation";
 
-export default function SideBar() {
+export default function SuspenseSideBar() {
+  const { id } = useParams();
+  const { data: roomInfo } = useSuspenseQuery(
+    chatRoomQueries.detail(Number(id)),
+  );
   return (
     <>
       <div className="dark:bg-gray-800 dark:border dark:border-r-2 dark:border-gray-700 flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 hidden md:flex">
@@ -14,9 +20,11 @@ export default function SideBar() {
           </div>
           <div className="ml-2 font-bold text-2xl dark:text-white">채팅방</div>
         </div>
-        <Suspense fallback={<>Loading......</>}>
-          <SuspenseProfileCard size="large" />
-        </Suspense>
+        <ProfileCard
+          size="large"
+          name={roomInfo.persona.name}
+          profileUrl={roomInfo.persona.image}
+        />
       </div>
     </>
   );

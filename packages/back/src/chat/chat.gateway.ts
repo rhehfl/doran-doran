@@ -75,16 +75,16 @@ export class ChatGateway {
     }
 
     try {
-      const data = await this.chatRoomsService.getChatRoomById(
+      const chatRoomInfo = await this.chatRoomsService.getChatRoomById(
         Number(roomId),
         user.userId,
       );
       socket.data.roomId = roomId;
-      socket.data.personaId = data.persona.id;
+      socket.data.chatRoomPersona = chatRoomInfo.persona;
 
       await this.chatService.setSystemInstruction(
         Number(roomId),
-        data.persona.prompt,
+        chatRoomInfo.persona.prompt,
       );
     } catch (error) {
       socket.emit('error', {
@@ -109,7 +109,10 @@ export class ChatGateway {
   ) {
     const roomId = socket.data.roomId as string;
     const user = socket.data.user as User;
-    const personaId = socket.data.personaId as number;
+
+    const personaId = socket.data.chatRoomPersona.id;
+    const personaName = socket.data.chatRoomPersona.name;
+    const profileUrl = socket.data.chatRoomPersona.image;
     const roomName = `room_${roomId}`;
 
     if (!roomId || !user || !personaId) {
@@ -124,8 +127,10 @@ export class ChatGateway {
         Number(roomId),
         payload,
         user.userId,
+        user.nickname,
         personaId,
         user.isAuthenticated,
+        user.profileUrl,
       );
     } catch (error) {
       this.server.to(roomName).emit('save-error', {
@@ -150,6 +155,8 @@ export class ChatGateway {
     const aiMessage: Message = {
       userId: user.userId,
       author: 'Gemini',
+      senderProfileImage: profileUrl,
+      senderName: personaName,
       content: aiResponseText,
     };
 
@@ -157,8 +164,10 @@ export class ChatGateway {
       Number(roomId),
       aiMessage,
       user.userId,
+      user.nickname,
       personaId,
       user.isAuthenticated,
+      profileUrl,
     );
   }
 
@@ -169,10 +178,5 @@ export class ChatGateway {
 
       this.server.to(`room_${roomId}`).emit('leave-user', socket.data.user);
     }
-  }
-
-  private async broadcastActiveUsers(roomId: number) {
-    const activeUsers = await this.chatService.getActiveUsers(roomId);
-    this.server.to(`room_${roomId}`).emit('active-users', activeUsers);
   }
 }

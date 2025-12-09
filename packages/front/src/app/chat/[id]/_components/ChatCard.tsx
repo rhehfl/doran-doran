@@ -1,60 +1,77 @@
 "use client";
-import { useSuspenseAuth } from "@/app/_hooks";
-import { SuspenseProfileCard } from "@/app/chat/[id]/_components";
-import { transition } from "@ssgoi/react";
-import { slide } from "@ssgoi/react/transitions";
+import { UserProfileIcon } from "@/app/_components";
+import { ProfileCard } from "@/app/chat/[id]/_components";
 import { Message } from "common";
-import { memo, Suspense } from "react";
+import { memo } from "react";
 import Markdown from "react-markdown";
 
 interface ChatCardProps extends Message {
   id: number;
+  currentUserId: string;
 }
 
 export default memo(function ChatCard({
   userId,
   author,
-  id,
   content,
+  senderName,
+  senderProfileImage,
+  currentUserId,
 }: ChatCardProps) {
-  const user = useSuspenseAuth();
+  const isGemini = author === "Gemini";
+  const isMe = userId === currentUserId;
 
-  if (author === "Gemini") {
+  if (isGemini) {
     return (
       <div
-        className={`flex lg:items-end mb-2 lg:flex-row flex-col  lg:justify-start items-start`}
+        className={`flex lg:items-end mb-2 lg:flex-row flex-col lg:justify-start items-start gap-2`}
       >
-        <Suspense
-          fallback={
-            <div className="w-8 h-8 rounded-full bg-gray-300 animate-pulse" />
-          }
-        >
-          <SuspenseProfileCard size="small" />
-        </Suspense>
-        <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#E0E7FF] order-1">
+        <ProfileCard
+          size="small"
+          profileUrl={senderProfileImage}
+          name={senderName}
+        />
+        <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#E0E7FF]">
           <div className="text-sm wrap-anywhere">
             <Markdown>{content}</Markdown>
           </div>
+          {!isGemini && (
+            <span className="text-xs text-gray-500 block mt-1">
+              {senderName}
+            </span>
+          )}
         </div>
       </div>
     );
   }
 
-  if (userId !== user?.userId) {
+  if (!isMe) {
     return (
       <div
-        ref={transition({
-          key: `chat-card-${id}`,
-          ...slide({
-            direction: "up",
-          }),
-        })}
-        className={`flex lg:items-end mb-2 lg:flex-row flex-col  lg:justify-start items-start`}
+        className={`flex lg:items-end mb-2 lg:flex-row flex-col lg:justify-start items-start gap-2`}
       >
-        <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#E0E7FF] order-1">
-          <div className="text-sm">
+        <div className="flex flex-col min-w-15 items-center space-y-2 mr-2">
+          <UserProfileIcon
+            user={{
+              nickname: senderName,
+              profileUrl: senderProfileImage,
+              isAuthenticated: true,
+              userId: userId,
+            }}
+          />
+          <span className="text-xs text-gray-500 break-words max-w-[50px] text-center dark:text-white">
+            {senderName}
+          </span>
+        </div>
+        <div className="relative max-w-lg px-4 py-2 rounded-lg bg-[#e9fff7]">
+          <div className="text-sm wrap-anywhere">
             <Markdown>{content}</Markdown>
           </div>
+          {!isGemini && (
+            <span className="text-xs text-gray-500 block mt-1">
+              {senderName}
+            </span>
+          )}
         </div>
       </div>
     );
@@ -62,9 +79,9 @@ export default memo(function ChatCard({
 
   return (
     <div
-      className={`flex lg:items-end mb-2 lg:flex-row flex-col lg:justify-end items-end`}
+      className={`flex lg:items-end mb-2 lg:flex-row flex-col lg:justify-end items-end gap-2`}
     >
-      <div className="relative max-w-lg px-4 py-2 rounded-lg order-2 bg-[#E0E7FF]">
+      <div className="relative max-w-lg px-4 py-2 rounded-lg bg-yellow-100">
         <div className="text-sm">
           <Markdown>{content}</Markdown>
         </div>

@@ -70,18 +70,22 @@ export class ChatService {
     const multi = this.redisClient.multi();
     for (const msg of reversedHistory) {
       const cacheMsg: Message = {
+        senderProfileImage: msg.senderProfileImage,
         userId: msg.userId,
         author: msg.author,
         content: msg.content,
+        senderName: msg.senderName,
       };
       multi.rPush(key, JSON.stringify(cacheMsg));
     }
     await multi.exec();
 
     return dbHistory.map((msg) => ({
+      senderProfileImage: msg.senderProfileImage,
       userId: msg.userId,
       author: msg.author,
       content: msg.content,
+      senderName: msg.senderName,
     }));
   }
 
@@ -89,8 +93,10 @@ export class ChatService {
     roomId: number,
     message: Message,
     userId: string,
+    senderName: string,
     personaId: number,
     isAuthenticated: boolean,
+    profileImage: string,
   ) {
     if (!isAuthenticated && message.author !== 'Gemini') {
       const userMessageCount = await this.messageRepository.count({
@@ -108,9 +114,11 @@ export class ChatService {
       const newChatMessage = this.messageRepository.create({
         roomId,
         author: message.author,
+        senderName,
         content: message.content,
-        userId: userId,
+        userId,
         personaId,
+        senderProfileImage: profileImage,
       });
       await this.messageRepository.save(newChatMessage);
     } catch (error) {

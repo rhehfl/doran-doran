@@ -23,11 +23,18 @@ export class Chat {
   @JoinColumn({ name: 'roomId' })
   room: ChatRoom;
 
+  @Column({ type: 'varchar', length: 50 })
+  senderName: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  senderProfileImage: string;
+
   @Column({ type: 'varchar' })
   userId: string;
 
   @Column({ nullable: true })
   personaId: number;
+
   @ManyToOne(() => Personas, {
     onDelete: 'SET NULL',
     nullable: true,
