@@ -54,6 +54,7 @@ export const useChat = (
 
     newSocket.on("ai-stream-done", (data: { fullText: string }) => {
       setIsAiThinking(false);
+      console.log(data);
       options?.onStreamDone?.(data.fullText);
     });
 
