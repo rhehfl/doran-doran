@@ -1,3 +1,16 @@
+# [1.16.0](https://github.com/rhehfl/doran-doran/compare/v1.15.0...v1.16.0) (2025-12-09)
+
+
+### Bug Fixes
+
+* 타입 가져오기 문법 수정 ([2ab68b1](https://github.com/rhehfl/doran-doran/commit/2ab68b1529b2eb8fd4e7c90ac40eb3068f9ef0e6))
+
+
+### Features
+
+* AI 메시지 전송 시 프로필 정보 업데이트 및 로그 추가 ([df1d7c0](https://github.com/rhehfl/doran-doran/commit/df1d7c0edb7bb99fd93ba8de10e469ed6f8ea0c5))
+* 채팅방 가시성 토글 컴포넌트 추가 및 사이드바에 통합 ([e679b91](https://github.com/rhehfl/doran-doran/commit/e679b91bc24a5275291002f779551fd16b85722f))
+
 # [1.15.0](https://github.com/rhehfl/doran-doran/compare/v1.14.2...v1.15.0) (2025-12-09)
 
 
