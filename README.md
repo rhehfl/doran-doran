@@ -1,19 +1,61 @@
-# dev-ai-talk
+# 🗣️ Doran-Doran (도란도란)
+> **Next.js & NestJS 기반의 실시간 AI 캐릭터 채팅 서비스**
 
-## 커밋 타입 (Commit Type)
+## 📖 프로젝트 소개 🗣️ Doran-Doran (도란도란)
+> **Next.js & NestJS 기반의 실시간 AI 캐릭터 채팅 서비스**
 
-- [ ] feat: 새로운 기능 추가
-- [ ] fix: 버그 수정
-- [ ] docs: 문서 수정
-- [ ] chore: 빌드 시스템 또는 기타 작업 (패키지 버전 업데이트, 설정 변경 등)
-- [ ] refactor: 코드 리팩토링 (기능 변경 없음)
-- [ ] style: 코드 포맷팅, 세미콜론 누락 등 (기능 변경 없음)
+## 📖 프로젝트 소개
+**Doran-Doran**은 사용자가 AI 페르소나, 여러 사용자와 실시간으로 대화하는 웹 서비스입니다.
 
-### ✨ 주요 기능
-* AI 페르소나 채팅: 정의된 여러 AI 페르소나와 대화방을 생성하고 채팅할 수 있습니다.
+풀 스택 개발 경험과 배포 등 웹 개발 전체를 혼자 경험해보고자 시작한 프로젝트입니다.
 
-* 실시간 채팅: Socket.io를 통해 사용자와 AI 간의 메시지를 실시간으로 주고받습니다.
+## 🛠️ Tech Stack
+- **Frontend:** Next.js, TypeScript, TailwindCSS
+- **Backend:** NestJS, Socket.io, TypeORM (Redis/PostgreSQL)
+- **Infra & AI:** Docker, Google Gemini API, AWS EC2
 
-* AI 응답 스트리밍: Gemini API의 sendMessageStream을 사용하여 AI의 응답을 실시간 스트림으로 받아와 사용자에게 즉각적으로 보여줍니다.
+---
 
-* 채팅방 관리: 채팅방 생성 및 이전 대화 내역 조회가 가능합니다
+## 📸 주요 페이지 소개
+<table>
+  <tr>
+    <td align="center">
+      <b>소개 페이지</b><br>
+      <img width="1813" height="910" alt="image" src="https://github.com/user-attachments/assets/606374e7-bb1e-4d33-a714-873225720984" />
+      <br>SEO 최적화와 사이트 소개를 위한 페이지
+    </td>
+    <td align="center">
+      <b>채팅방 페이지</b><br>
+       <img width="1891" height="864" alt="image" src="https://github.com/user-attachments/assets/3d921d3d-b7f1-468f-9943-2435420b1031" />
+      <br>생성한 채팅방 및 공개 채팅방을 확인하는 페이지
+    </td>
+  </tr>
+  <tr>
+  <td align="center">
+    <b>AI 선택 페이지</b><br>
+  <img width="1906" height="863" alt="image" src="https://github.com/user-attachments/assets/f7ccb6d9-482a-4c98-b1bf-85ba46313b3d" />
+     <br>대화할 AI를 선택하는 페이지
+  </td>
+    <td align="center">
+    <b>채팅방 페이지</b><br>
+  <img width="1900" height="862" alt="image" src="https://github.com/user-attachments/assets/b08a4267-e15e-4607-88bf-1a9164ae8158" />
+     <br>유저 및 AI와 대화하는 페이지
+  </td>
+  </tr>
+   <tr>
+  <td align="center">
+    <b>로그인 페이지</b><br>
+  <img width="1758" height="845" alt="image" src="https://github.com/user-attachments/assets/b1a4559c-0799-4136-822c-9c97eeffb10a" />
+     <br>Oauth기반 google 로그인 구현
+  </td>
+
+  </tr>
+
+
+</table>
+
+
+* **기술적 포인트:**
+    * **Prompt Engineering:** 사용자가 설정한 옵션을 바탕으로 Gemini API에 최적화된 시스템 프롬프트 주입.
+
+---
